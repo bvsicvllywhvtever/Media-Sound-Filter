@@ -1,4 +1,4 @@
-package com.example.mediasoundfilter.screens.upload
+package com.example.mediasoundfilter.screens.create_account
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
@@ -8,14 +8,25 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.mediasoundfilter.R
-import com.example.mediasoundfilter.nav.NavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UploadScreen() {
+fun CreateAccountScreen(navigateToLogin: () -> Unit) {
     Column {
         Text(
-            text = stringResource(R.string.upload_message)
+            text = stringResource(R.string.title)
+        )
+        TextField(
+            value = "",
+            onValueChange = {}
+        )
+        TextField(
+            value = "",
+            onValueChange = {}
+        )
+        TextField(
+            value = "",
+            onValueChange = {}
         )
         TextField(
             value = "",
@@ -24,8 +35,7 @@ fun UploadScreen() {
         Button(
             onClick = {}
         ) {
-            Text(stringResource(R.string.upload))
+            Text(stringResource(R.string.create_account))
         }
-        NavBar()
     }
 }
