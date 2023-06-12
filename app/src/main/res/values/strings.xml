@@ -8,4 +8,5 @@
     <string name="upload_message">Please enter the youtube link for the video you wish to
     scan.</string>
     <string name="upload">Upload</string>
+    <string name="saved">Saved</string>
 </resources>
