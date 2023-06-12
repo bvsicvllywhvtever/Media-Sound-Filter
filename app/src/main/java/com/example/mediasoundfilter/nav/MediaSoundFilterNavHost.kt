@@ -1,11 +1,14 @@
 package com.example.mediasoundfilter.nav
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.mediasoundfilter.screens.account.AccountScreen
 import com.example.mediasoundfilter.screens.create_account.CreateAccountScreen
 import com.example.mediasoundfilter.screens.login.LoginScreen
+import com.example.mediasoundfilter.screens.media.MediaScreen
+import com.example.mediasoundfilter.screens.search.SearchScreen
 import com.example.mediasoundfilter.screens.upload.UploadScreen
 
 @Composable
@@ -30,11 +33,14 @@ fun MediaSoundFilterNavHost(
        composable("upload") {
            UploadScreen()
        }
-       /*composable("account") {
+       composable("account") {
            AccountScreen()
        }
        composable("search") {
            SearchScreen()
-       }*/
+       }
+       composable("media") {
+           MediaScreen()
+       }
    }
 }
