@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MediaSoundFilter</string>
+    <string name="title">Media Sound Filter</string>
+    <string name="login">Login</string>
+    <string name="sign_up_message">Don\'t have an account?</string>
+    <string name="sign_up_link">Sign up</string>
+    <string name="create_account">Sign up</string>
+</resources>
