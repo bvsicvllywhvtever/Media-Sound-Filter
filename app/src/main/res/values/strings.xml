@@ -9,4 +9,12 @@
     scan.</string>
     <string name="upload">Upload</string>
     <string name="saved">Saved</string>
+    <string name="mute_sounds">Mute Sounds</string>
+
+    <string-array name="trigger_sounds">
+        <item>Throat Clearing</item>
+        <item>Typing</item>
+        <item>Chewing</item>
+        <item>Yawning</item>
+    </string-array>
 </resources>
