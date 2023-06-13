@@ -12,6 +12,7 @@
     <string name="mute_sounds">Mute Sounds</string>
     <string name="arrow">Back Arrow</string>
     <string name="search">Search</string>
+    <string name="account">Account</string>
 
     <string-array name="trigger_sounds">
         <item>Throat Clearing</item>
