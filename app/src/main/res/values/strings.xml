@@ -10,6 +10,8 @@
     <string name="upload">Upload</string>
     <string name="saved">Saved</string>
     <string name="mute_sounds">Mute Sounds</string>
+    <string name="arrow">Back Arrow</string>
+    <string name="search">Search</string>
 
     <string-array name="trigger_sounds">
         <item>Throat Clearing</item>
