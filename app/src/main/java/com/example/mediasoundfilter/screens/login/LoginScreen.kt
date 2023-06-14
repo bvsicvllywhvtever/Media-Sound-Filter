@@ -64,7 +64,7 @@ fun LoginScreen(navigateToUpload: () -> Unit, navigateToCreateAccount: () -> Uni
                         colorFilter = ColorFilter.tint(colorResource(R.color.main))
                     )},
                 shape = RoundedCornerShape(10.dp),
-                modifier = Modifier.padding(15.dp)
+                modifier = Modifier.padding(10.dp)
             )
             var passValue by remember { mutableStateOf("") }
             OutlinedTextField(
@@ -79,7 +79,7 @@ fun LoginScreen(navigateToUpload: () -> Unit, navigateToCreateAccount: () -> Uni
                     )},
                 visualTransformation = PasswordVisualTransformation(),
                 shape = RoundedCornerShape(10.dp),
-                modifier = Modifier.padding(15.dp)
+                modifier = Modifier.padding(10.dp)
             )
         }
         Button(

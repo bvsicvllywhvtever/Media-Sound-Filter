@@ -26,9 +26,9 @@ fun MediaSoundFilterNavHost(
            )
        }
        composable("createAccount") {
-           CreateAccountScreen() {
+           CreateAccountScreen() /*{
                navController.navigate("login")
-           }
+           }*/
        }
        composable("upload") {
            UploadScreen()
