@@ -17,6 +17,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -48,9 +52,10 @@ fun LoginScreen(navigateToUpload: () -> Unit, navigateToCreateAccount: () -> Uni
         Column(
             modifier = Modifier.padding(15.dp)
         ) {
+            var userValue by remember {mutableStateOf("")}
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = userValue,
+                onValueChange = { userValue = it },
                 label = {Text(stringResource(R.string.username))},
                 leadingIcon = {
                     Image(
@@ -61,9 +66,10 @@ fun LoginScreen(navigateToUpload: () -> Unit, navigateToCreateAccount: () -> Uni
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(15.dp)
             )
+            var passValue by remember { mutableStateOf("") }
             OutlinedTextField(
-                value = "",
-                onValueChange = {},
+                value = passValue,
+                onValueChange = {passValue = it},
                 label = {Text(stringResource(R.string.password))},
                 leadingIcon = {
                     Icon(
