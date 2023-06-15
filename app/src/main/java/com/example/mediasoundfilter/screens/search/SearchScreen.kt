@@ -45,5 +45,5 @@ fun SearchScreen(navRoutes: Array<() -> Unit>) {
 @Preview(showBackground = true)
 @Composable
 fun SearchScreenPreview() {
-    SearchScreen(arrayOf())
+    SearchScreen(arrayOf({}, {}, {}))
 }

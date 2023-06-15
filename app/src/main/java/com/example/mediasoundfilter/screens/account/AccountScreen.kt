@@ -42,5 +42,5 @@ fun AccountScreen(navRoutes: Array<() -> Unit>) {
 @Preview(showBackground = true)
 @Composable
 fun AccountScreenPreview() {
-    AccountScreen(arrayOf())
+    AccountScreen(arrayOf({}, {}, {}))
 }

@@ -35,7 +35,7 @@ fun MediaSoundFilterNavHost(
            }
        }
        composable("upload") {
-           UploadScreen(navRoutes)
+           UploadScreen(navRoutes, {navController.navigate("media")})
        }
        composable("account") {
            AccountScreen(navRoutes)

@@ -49,5 +49,5 @@ fun MediaScreen(navRoutes: Array<() -> Unit>) {
 @Preview(showBackground = true)
 @Composable
 fun MediaScreenPreview() {
-    MediaScreen(arrayOf())
+    MediaScreen(arrayOf({}, {}, {}))
 }
