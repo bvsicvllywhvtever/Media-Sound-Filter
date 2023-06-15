@@ -17,7 +17,7 @@ import com.example.mediasoundfilter.nav.NavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MediaScreen() {
+fun MediaScreen(navRoutes: Array<() -> Unit>) {
     Scaffold(
         content = { padding ->
             Column(modifier = Modifier.padding(padding)) {
@@ -42,12 +42,12 @@ fun MediaScreen() {
                 }
             }
         },
-        bottomBar = {NavBar()}
+        bottomBar = {NavBar(navRoutes)}
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun MediaScreenPreview() {
-    MediaScreen()
+    MediaScreen(arrayOf())
 }

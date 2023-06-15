@@ -26,8 +26,7 @@ import com.example.mediasoundfilter.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateAccountScreen() {
-//fun CreateAccountScreen(navigateToLogin: () -> Unit) {
+fun CreateAccountScreen(navigateToLogin: () -> Unit) {
     Column (
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -80,7 +79,7 @@ fun CreateAccountScreen() {
         }
 
         Button(
-            onClick = {}
+            onClick = navigateToLogin
         ) {
             Text(stringResource(R.string.create_account))
         }
@@ -90,5 +89,5 @@ fun CreateAccountScreen() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun CreateAccountScreenPreview() {
-    CreateAccountScreen()
+    CreateAccountScreen({})
 }

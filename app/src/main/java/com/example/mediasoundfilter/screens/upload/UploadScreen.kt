@@ -16,7 +16,7 @@ import com.example.mediasoundfilter.nav.NavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UploadScreen() {
+fun UploadScreen(navRoutes: Array<() -> Unit>) {
     Scaffold(
         content = { padding ->
             Column (modifier = Modifier.padding(padding)) {
@@ -34,12 +34,12 @@ fun UploadScreen() {
                 }
             }
         },
-        bottomBar = {NavBar()}
+        bottomBar = {NavBar(navRoutes)}
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun UploadScreenPreview() {
-    UploadScreen()
+    UploadScreen(arrayOf())
 }

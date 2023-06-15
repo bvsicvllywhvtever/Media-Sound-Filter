@@ -17,7 +17,7 @@ import com.example.mediasoundfilter.nav.NavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen() {
+fun SearchScreen(navRoutes: Array<() -> Unit>) {
     Scaffold(
         content = { padding ->
             Column(modifier = Modifier.padding(padding)) {
@@ -38,12 +38,12 @@ fun SearchScreen() {
                 //foreach suggestion
             }
         },
-        bottomBar = {NavBar()}
+        bottomBar = {NavBar(navRoutes)}
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SearchScreenPreview() {
-    SearchScreen()
+    SearchScreen(arrayOf())
 }

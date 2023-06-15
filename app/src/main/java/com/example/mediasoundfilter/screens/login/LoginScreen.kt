@@ -35,7 +35,6 @@ import com.example.mediasoundfilter.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-//fun LoginScreen() {
 fun LoginScreen(navigateToUpload: () -> Unit, navigateToCreateAccount: () -> Unit) {
     Column(
         verticalArrangement = Arrangement.Center,
@@ -106,5 +105,5 @@ fun LoginScreen(navigateToUpload: () -> Unit, navigateToCreateAccount: () -> Uni
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    //LoginScreen()
+    LoginScreen({}, {})
 }

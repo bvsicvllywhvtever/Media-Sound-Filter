@@ -19,6 +19,10 @@ fun MediaSoundFilterNavHost(
        navController = navController,
        startDestination = "login"
    ) {
+       val navRoutes = arrayOf( {navController.navigate("account")},
+           {navController.navigate("upload")},
+           {navController.navigate("search")})
+
        composable("login") {
            LoginScreen (
                {navController.navigate("upload") },
@@ -26,21 +30,21 @@ fun MediaSoundFilterNavHost(
            )
        }
        composable("createAccount") {
-           CreateAccountScreen() /*{
+           CreateAccountScreen() {
                navController.navigate("login")
-           }*/
+           }
        }
        composable("upload") {
-           UploadScreen()
+           UploadScreen(navRoutes)
        }
        composable("account") {
-           AccountScreen()
+           AccountScreen(navRoutes)
        }
        composable("search") {
-           SearchScreen()
+           SearchScreen(navRoutes)
        }
        composable("media") {
-           MediaScreen()
+           MediaScreen(navRoutes)
        }
    }
 }
