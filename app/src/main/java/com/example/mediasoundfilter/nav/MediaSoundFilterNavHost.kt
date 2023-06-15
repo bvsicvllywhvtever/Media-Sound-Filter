@@ -35,10 +35,10 @@ fun MediaSoundFilterNavHost(
            }
        }
        composable("upload") {
-           UploadScreen(navRoutes, {navController.navigate("media")})
+           UploadScreen(navRoutes) { navController.navigate("media") }
        }
        composable("account") {
-           AccountScreen(navRoutes)
+           AccountScreen(navRoutes) { navController.navigate("media") }
        }
        composable("search") {
            SearchScreen(navRoutes)
