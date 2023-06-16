@@ -27,7 +27,7 @@ fun NavBar(navRoutes: Array<() -> Unit>) {
         modifier = Modifier
             .fillMaxWidth()
             .background(colorResource(R.color.main))
-            .fillMaxHeight(.1f)
+            .fillMaxHeight(.05f)
             //.padding(0.dp, 40.dp)
             //.size(100.dp)
     ) {
