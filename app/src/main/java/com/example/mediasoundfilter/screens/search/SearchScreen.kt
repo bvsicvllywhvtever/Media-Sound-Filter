@@ -99,7 +99,7 @@ fun SearchScreen(navRoutes: Array<() -> Unit>) {
                 ){
                     items(50){
                         Row(
-                            modifier = Modifier.padding(10.dp)
+                            modifier = Modifier.padding(10.dp, 17.5.dp)
                         ){
                             Icon(
                                 imageVector = Icons.Default.Search,

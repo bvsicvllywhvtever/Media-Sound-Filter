@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -65,7 +66,9 @@ fun UploadScreen(navRoutes: Array<() -> Unit>, navigateToMedia: () -> Unit) {
                     modifier = Modifier.padding(20.dp)
                 )
                 Button(
-                    onClick = navigateToMedia
+                    onClick = navigateToMedia,
+                    shape = RoundedCornerShape(10.dp),
+                    colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
                 ) {
                     Text(stringResource(R.string.upload))
                 }

@@ -79,13 +79,13 @@ fun AccountScreen(navRoutes: Array<() -> Unit>, navigateToMedia: () -> Unit) {
                                 )
                                 Text(
                                     text = "Uploaded by Test",
-                                    fontSize = 10.sp,
+                                    fontSize = 12.sp,
                                     modifier = Modifier
                                         .padding(10.dp, 0.dp)
                                 )
                                 Text(
                                     text = "1 month ago",
-                                    fontSize = 10.sp,
+                                    fontSize = 12.sp,
                                     modifier = Modifier
                                         .padding(10.dp, 0.dp)
                                 )
