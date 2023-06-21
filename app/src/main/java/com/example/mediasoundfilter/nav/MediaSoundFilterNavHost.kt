@@ -5,8 +5,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.mediasoundfilter.screens.account.AccountScreen
-import com.example.mediasoundfilter.screens.create_account.CreateAccountScreen
-import com.example.mediasoundfilter.screens.login.LoginScreen
 import com.example.mediasoundfilter.screens.media.MediaScreen
 import com.example.mediasoundfilter.screens.search.SearchScreen
 import com.example.mediasoundfilter.screens.upload.UploadScreen
@@ -17,23 +15,12 @@ fun MediaSoundFilterNavHost(
 ) {
    NavHost(
        navController = navController,
-       startDestination = "login"
+       startDestination = "upload"
    ) {
        val navRoutes = arrayOf( {navController.navigate("account")},
            {navController.navigate("upload")},
            {navController.navigate("search")})
 
-       composable("login") {
-           LoginScreen (
-               {navController.navigate("upload") },
-               {navController.navigate("createAccount") }
-           )
-       }
-       composable("createAccount") {
-           CreateAccountScreen() {
-               navController.navigate("login")
-           }
-       }
        composable("upload") {
            UploadScreen(navRoutes) { navController.navigate("media") }
        }

@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,11 +33,20 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.mediasoundfilter.R
+import com.example.mediasoundfilter.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navigateToUpload: () -> Unit, navigateToCreateAccount: () -> Unit) {
+fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
+
+    //check if logged in
+    val authUiState = authViewModel.authUiState.collectAsState()
+    if(authUiState.value.loggedIn){
+        navController.navigate("upload")
+    }
+
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -83,7 +93,7 @@ fun LoginScreen(navigateToUpload: () -> Unit, navigateToCreateAccount: () -> Uni
             )
         }
         Button(
-            onClick = navigateToUpload,
+            onClick = { authViewModel.login() },
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
         ){
@@ -97,7 +107,7 @@ fun LoginScreen(navigateToUpload: () -> Unit, navigateToCreateAccount: () -> Uni
             Text(
                 text = stringResource(R.string.sign_up_link),
                 color = colorResource(R.color.link),
-                modifier = Modifier.clickable(onClick = navigateToCreateAccount)
+                modifier = Modifier.clickable(onClick = {navController.navigate("createAccount")})
             )
         }
     }
@@ -106,5 +116,5 @@ fun LoginScreen(navigateToUpload: () -> Unit, navigateToCreateAccount: () -> Uni
 @Preview(showBackground = true)
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen({}, {})
+    //LoginScreen({}, {})
 }
