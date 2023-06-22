@@ -6,6 +6,7 @@ import com.example.mediasoundfilter.uistate.AuthUiState
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,6 +18,10 @@ class AuthViewModel : ViewModel() {
 
     private var auth: FirebaseAuth = Firebase.auth
 
+    /**
+     * Logs in a user given an email and password. Sets AuthUiState's currentUser to the
+     * given email. Setting the current user to a nonnull value switches the navhost.
+     */
     fun login(email: String, password: String){
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(OnCompleteListener { task ->
@@ -30,11 +35,15 @@ class AuthViewModel : ViewModel() {
             })
     }
 
-    fun createAccount(email: String, password: String){
+    /**
+     * Creates an account for a user given an email, password, and username.
+     */
+    fun createAccount(email: String, password: String, username: String){
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(OnCompleteListener { task ->
                 if(task.isSuccessful){
                     //TODO: show success message
+                    auth.currentUser!!.updateProfile(userProfileChangeRequest { displayName = username })
                 }
                 else{
                     //TODO: show error message

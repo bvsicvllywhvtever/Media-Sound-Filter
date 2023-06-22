@@ -89,7 +89,7 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
 
         Button(
             onClick = {
-                authViewModel.createAccount(emailValue, passValue)
+                authViewModel.createAccount(emailValue, passValue, userValue)
                 navController.navigate("login")
             },
             shape = RoundedCornerShape(10.dp),
