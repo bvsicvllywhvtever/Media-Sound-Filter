@@ -41,9 +41,12 @@ import com.example.mediasoundfilter.viewmodel.AuthViewModel
 @Composable
 fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
 
+    var emailValue by remember {mutableStateOf("")}
+    var passValue by remember { mutableStateOf("") }
+
     //check if logged in
     val authUiState = authViewModel.authUiState.collectAsState()
-    if(authUiState.value.loggedIn){
+    if(authUiState.value.currentUser != null){
         navController.navigate("upload")
     }
 
@@ -62,11 +65,11 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
         Column(
             modifier = Modifier.padding(15.dp)
         ) {
-            var userValue by remember {mutableStateOf("")}
+
             OutlinedTextField(
-                value = userValue,
-                onValueChange = { userValue = it },
-                label = {Text(stringResource(R.string.username))},
+                value = emailValue,
+                onValueChange = { emailValue = it },
+                label = {Text(stringResource(R.string.email))},
                 leadingIcon = {
                     Image(
                         painter = painterResource(R.drawable.account),
@@ -76,7 +79,7 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(10.dp)
             )
-            var passValue by remember { mutableStateOf("") }
+
             OutlinedTextField(
                 value = passValue,
                 onValueChange = {passValue = it},
@@ -93,7 +96,7 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
             )
         }
         Button(
-            onClick = { authViewModel.login() },
+            onClick = { authViewModel.login(emailValue, passValue) },
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
         ){

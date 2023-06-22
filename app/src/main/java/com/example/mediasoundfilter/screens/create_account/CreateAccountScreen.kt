@@ -24,11 +24,18 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.mediasoundfilter.R
+import com.example.mediasoundfilter.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CreateAccountScreen(navigateToLogin: () -> Unit) {
+fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostController) {
+    var userValue by remember { mutableStateOf("") }
+    var emailValue by remember { mutableStateOf("") }
+    var passValue by remember { mutableStateOf("") }
+    var confirmValue by remember { mutableStateOf("") }
+
     Column (
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -40,7 +47,7 @@ fun CreateAccountScreen(navigateToLogin: () -> Unit) {
             text = stringResource(R.string.title),
             fontSize = 25.sp
         )
-        var userValue by remember { mutableStateOf("") }
+
 
         Column(
             modifier = Modifier.padding(15.dp)
@@ -52,7 +59,7 @@ fun CreateAccountScreen(navigateToLogin: () -> Unit) {
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(10.dp)
             )
-            var emailValue by remember { mutableStateOf("") }
+
             OutlinedTextField(
                 value = emailValue,
                 onValueChange = { emailValue = it },
@@ -60,7 +67,7 @@ fun CreateAccountScreen(navigateToLogin: () -> Unit) {
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(10.dp)
             )
-            var passValue by remember { mutableStateOf("") }
+
             OutlinedTextField(
                 value = passValue,
                 onValueChange = { passValue = it },
@@ -69,7 +76,7 @@ fun CreateAccountScreen(navigateToLogin: () -> Unit) {
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.padding(10.dp)
             )
-            var confirmValue by remember { mutableStateOf("") }
+
             OutlinedTextField(
                 value = confirmValue,
                 onValueChange = { confirmValue = it },
@@ -81,7 +88,10 @@ fun CreateAccountScreen(navigateToLogin: () -> Unit) {
         }
 
         Button(
-            onClick = navigateToLogin,
+            onClick = {
+                authViewModel.createAccount(emailValue, passValue)
+                navController.navigate("login")
+            },
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
         ) {
@@ -93,5 +103,5 @@ fun CreateAccountScreen(navigateToLogin: () -> Unit) {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun CreateAccountScreenPreview() {
-    CreateAccountScreen({})
+    //CreateAccountScreen({})
 }

@@ -18,9 +18,7 @@ fun AuthNavHost(authViewModel: AuthViewModel, navController: NavHostController) 
             LoginScreen (authViewModel, navController)
         }
         composable("createAccount") {
-            CreateAccountScreen() {
-                navController.navigate("login")
-            }
+            CreateAccountScreen(authViewModel, navController)
         }
     }
 }

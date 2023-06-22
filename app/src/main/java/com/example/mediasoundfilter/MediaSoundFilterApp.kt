@@ -18,7 +18,7 @@ fun MediaSoundFilterApp() {
     val authUiState = authViewModel.authUiState.collectAsState()
 
     //check if logged in, navigate to right page
-    if(authUiState.value.loggedIn){
+    if(authUiState.value.currentUser != null){
         MediaSoundFilterNavHost(navController = navController)
     }
     else{
