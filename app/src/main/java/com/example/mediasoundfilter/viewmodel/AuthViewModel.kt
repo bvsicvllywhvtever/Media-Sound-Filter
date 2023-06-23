@@ -23,16 +23,22 @@ class AuthViewModel : ViewModel() {
      * given email. Setting the current user to a nonnull value switches the navhost.
      */
     fun login(email: String, password: String){
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(OnCompleteListener { task ->
-                if(task.isSuccessful){
-                    _authUiState.value = AuthUiState(email)
-                }
-                else{
-                    //TODO: show error message
-                    Log.d("MSF", "Login Failure", task.exception)
-                }
-            })
+        //perform validation
+        validateEmailRequired(email)
+        validatePassRequired(password)
+
+        //if no errors, login
+        if(_authUiState.value.emailErrorText == null && _authUiState.value.passErrorText == null) {
+            auth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        _authUiState.value = _authUiState.value.copy(currentUser = email)
+                    } else {
+                        _authUiState.value = _authUiState.value.copy(errorText = "Invalid username or password.")
+                        Log.d("MSF", "Login Failure", task.exception)
+                    }
+                })
+        }
     }
 
     /**
@@ -50,5 +56,14 @@ class AuthViewModel : ViewModel() {
                     Log.d("MSF", "Sign Up Failure", task.exception)
                 }
             })
+    }
+
+    fun validateEmailRequired(email: String): String?{
+        _authUiState.value = _authUiState.value.copy(emailErrorText =  if (email.isEmpty()) "This field is required." else null)
+        return authUiState.value.emailErrorText
+    }
+    fun validatePassRequired(password: String): String?{
+        _authUiState.value = _authUiState.value.copy(passErrorText =  if (password.isEmpty()) "This field is required." else null)
+        return authUiState.value.passErrorText
     }
 }

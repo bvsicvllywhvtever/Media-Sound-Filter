@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mediasoundfilter.R
+import com.example.mediasoundfilter.screens.ErrorText
 import com.example.mediasoundfilter.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -69,34 +70,55 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
             OutlinedTextField(
                 value = emailValue,
                 onValueChange = { emailValue = it },
+                isError = authUiState.value.emailErrorText != null,
                 label = {Text(stringResource(R.string.email))},
                 leadingIcon = {
                     Image(
                         painter = painterResource(R.drawable.account),
                         contentDescription = null,
-                        colorFilter = ColorFilter.tint(colorResource(R.color.main))
+                        colorFilter =
+                        if (authUiState.value.emailErrorText == null){
+                            ColorFilter.tint(colorResource(R.color.main))
+                        }
+                        else{
+                            ColorFilter.tint(colorResource(R.color.error))
+                        }
                     )},
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(10.dp)
             )
 
+            //show required email error message
+            authUiState.value.emailErrorText?.let { ErrorText(it) }
+
             OutlinedTextField(
                 value = passValue,
                 onValueChange = {passValue = it},
+                isError = authUiState.value.passErrorText != null,
                 label = {Text(stringResource(R.string.password))},
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Lock,
                         contentDescription = null,
-                        tint = colorResource(R.color.main)
+                        tint = if (authUiState.value.passErrorText == null){
+                            colorResource(R.color.main)
+                        }
+                        else{
+                            colorResource(R.color.error)
+                        }
                     )},
                 visualTransformation = PasswordVisualTransformation(),
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(10.dp)
             )
+
+            //show required password error
+            authUiState.value.passErrorText?.let { ErrorText(it) }
         }
         Button(
-            onClick = { authViewModel.login(emailValue, passValue) },
+            onClick = {
+                authViewModel.login(emailValue, passValue)
+            },
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
         ){
@@ -113,6 +135,9 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
                 modifier = Modifier.clickable(onClick = {navController.navigate("createAccount")})
             )
         }
+
+        //show invalid login error
+        authUiState.value.errorText?.let { ErrorText(it) }
     }
 }
 

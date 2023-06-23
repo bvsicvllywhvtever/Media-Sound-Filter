@@ -11,4 +11,5 @@
     <color name="main">#5587B6</color>
     <color name="secondary">#90B2D3</color>
     <color name="link">#4A7CDC</color>
+    <color name="error">#FFDD2C00</color>
 </resources>
