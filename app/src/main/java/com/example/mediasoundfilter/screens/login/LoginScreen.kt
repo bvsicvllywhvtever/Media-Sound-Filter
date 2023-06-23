@@ -70,14 +70,14 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
             OutlinedTextField(
                 value = emailValue,
                 onValueChange = { emailValue = it },
-                isError = authUiState.value.emailErrorText != null,
+                isError = authUiState.value.fieldErrors["loginEmail"] != null,
                 label = {Text(stringResource(R.string.email))},
                 leadingIcon = {
                     Image(
                         painter = painterResource(R.drawable.account),
                         contentDescription = null,
                         colorFilter =
-                        if (authUiState.value.emailErrorText == null){
+                        if (authUiState.value.fieldErrors["loginEmail"] == null){
                             ColorFilter.tint(colorResource(R.color.main))
                         }
                         else{
@@ -89,18 +89,18 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
             )
 
             //show required email error message
-            authUiState.value.emailErrorText?.let { ErrorText(it) }
+            authUiState.value.fieldErrors["loginEmail"]?.let { ErrorText(it) }
 
             OutlinedTextField(
                 value = passValue,
                 onValueChange = {passValue = it},
-                isError = authUiState.value.passErrorText != null,
+                isError = authUiState.value.fieldErrors["loginPass"] != null,
                 label = {Text(stringResource(R.string.password))},
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Lock,
                         contentDescription = null,
-                        tint = if (authUiState.value.passErrorText == null){
+                        tint = if (authUiState.value.fieldErrors["loginPass"] == null){
                             colorResource(R.color.main)
                         }
                         else{
@@ -113,7 +113,7 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
             )
 
             //show required password error
-            authUiState.value.passErrorText?.let { ErrorText(it) }
+            authUiState.value.fieldErrors["loginPass"]?.let { ErrorText(it) }
         }
         Button(
             onClick = {
@@ -137,7 +137,7 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
         }
 
         //show invalid login error
-        authUiState.value.errorText?.let { ErrorText(it) }
+        authUiState.value.fieldErrors["loginBottom"]?.let { ErrorText(it) }
     }
 }
 
