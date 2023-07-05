@@ -11,5 +11,6 @@ data class AuthUiState (
         "createPass1" to null,
         "createPass2" to null,
         "createBottom" to null
-    )
+    ),
+    val createAccountSuccess: Boolean = false
 )

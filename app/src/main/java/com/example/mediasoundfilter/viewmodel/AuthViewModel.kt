@@ -46,23 +46,27 @@ class AuthViewModel : ViewModel() {
     /**
      * Creates an account for a user given an email, password, and username.
      */
-    fun createAccount(username: String, email: String, p1: String, p2: String): Boolean{
-        var createAccountSuccess = createAccountValidation(username, email, p1, p2)
+    fun createAccount(username: String, email: String, p1: String, p2: String){
+        val success = createAccountValidation(username, email, p1, p2)
 
-        if(createAccountSuccess) {
+        if(success) {
             auth.createUserWithEmailAndPassword(email, p1)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         auth.currentUser!!.updateProfile(userProfileChangeRequest {
                             displayName = username
                         })
+                        _authUiState.value = _authUiState.value.copy(createAccountSuccess = true)
                     } else {
-                        //TODO: show network error message
-                        createAccountSuccess = false
+                        _authUiState.value = _authUiState.value.copy(
+                            fieldErrors = _authUiState.value.fieldErrors + (
+                                    "createBottom" to task.exception?.message)
+                        )
+                        Log.d("MSF", "Sign up error", task.exception)
+                        _authUiState.value = _authUiState.value.copy(createAccountSuccess = false)
                     }
                 }
         }
-        return createAccountSuccess
     }
 
     private fun loginValidation(email: String, password: String): Boolean{

@@ -101,8 +101,8 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
 
         Button(
             onClick = {
-                val success = authViewModel.createAccount(userValue, emailValue, passValue, confirmValue)
-                if (success){
+                authViewModel.createAccount(userValue, emailValue, passValue, confirmValue)
+                if (authUiState.value.createAccountSuccess){
                     navController.navigate("login")
                 }
             },
