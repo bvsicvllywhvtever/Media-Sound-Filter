@@ -27,7 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.mediasoundfilter.R
-import com.example.mediasoundfilter.screens.ErrorText
+import com.example.mediasoundfilter.screens.error.BottomErrorText
+import com.example.mediasoundfilter.screens.error.ErrorText
 import com.example.mediasoundfilter.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -64,7 +65,7 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(10.dp)
             )
-            authUiState.value.fieldErrors["createUser"]?.let{ErrorText(it)}
+            authUiState.value.fieldErrors["createUser"]?.let{ ErrorText(it) }
 
             OutlinedTextField(
                 value = emailValue,
@@ -85,7 +86,7 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.padding(10.dp)
             )
-            authUiState.value.fieldErrors["createPass1"]?.let{ ErrorText(it)}
+            authUiState.value.fieldErrors["createPass1"]?.let{ ErrorText(it) }
 
             OutlinedTextField(
                 value = confirmValue,
@@ -96,7 +97,7 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.padding(10.dp)
             )
-            authUiState.value.fieldErrors["createPass2"]?.let{ ErrorText(it)}
+            authUiState.value.fieldErrors["createPass2"]?.let{ ErrorText(it) }
         }
 
         Button(
@@ -112,7 +113,7 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
             Text(stringResource(R.string.create_account))
         }
 
-        authUiState.value.fieldErrors["createBottom"]?.let{ErrorText(it)}
+        authUiState.value.fieldErrors["createBottom"]?.let{ BottomErrorText(it) }
     }
 }
 

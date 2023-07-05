@@ -35,7 +35,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.mediasoundfilter.R
-import com.example.mediasoundfilter.screens.ErrorText
+import com.example.mediasoundfilter.screens.error.BottomErrorText
+import com.example.mediasoundfilter.screens.error.ErrorText
 import com.example.mediasoundfilter.viewmodel.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -137,7 +138,7 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
         }
 
         //show invalid login error
-        authUiState.value.fieldErrors["loginBottom"]?.let { ErrorText(it) }
+        authUiState.value.fieldErrors["loginBottom"]?.let { BottomErrorText(it) }
     }
 }
 
