@@ -3,7 +3,6 @@ package com.example.mediasoundfilter.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.example.mediasoundfilter.uistate.AuthUiState
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
@@ -31,15 +30,16 @@ class AuthViewModel : ViewModel() {
         //if no errors, login
         if(loginSuccess) {
             auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(OnCompleteListener { task ->
+                .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         _authUiState.value = AuthUiState(currentUser = email)
                     } else {
                         _authUiState.value = _authUiState.value.copy(
-                            fieldErrors = _authUiState.value.fieldErrors + ("loginBottom" to "Invalid username or password."))
+                            fieldErrors = _authUiState.value.fieldErrors + ("loginBottom" to "Invalid email or password.")
+                        )
                         Log.d("MSF", "Login Failure", task.exception)
                     }
-                })
+                }
         }
     }
 
@@ -47,21 +47,22 @@ class AuthViewModel : ViewModel() {
      * Creates an account for a user given an email, password, and username.
      */
     fun createAccount(username: String, email: String, p1: String, p2: String): Boolean{
-        val createAccountSuccess = createAccountValidation(username, email, p1, p2)
+        var createAccountSuccess = createAccountValidation(username, email, p1, p2)
 
         if(createAccountSuccess) {
             auth.createUserWithEmailAndPassword(email, p1)
-                .addOnCompleteListener(OnCompleteListener { task ->
+                .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         auth.currentUser!!.updateProfile(userProfileChangeRequest {
                             displayName = username
                         })
                     } else {
-                        //TODO: show error message
+                        //TODO: show network error message
+                        createAccountSuccess = false
                     }
-                })
+                }
         }
-        return false
+        return createAccountSuccess
     }
 
     private fun loginValidation(email: String, password: String): Boolean{
