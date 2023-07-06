@@ -6,9 +6,14 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -62,6 +67,19 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
                 onValueChange = { userValue = it },
                 isError = authUiState.value.fieldErrors["createUser"] != null,
                 label = { Text(stringResource(R.string.username)) },
+                leadingIcon = {
+                  Icon(
+                      imageVector = Icons.Default.AccountCircle,
+                      contentDescription = null,
+                      tint =
+                      if(authUiState.value.fieldErrors["createUser"] == null){
+                          colorResource(R.color.main)
+                      }
+                      else{
+                        colorResource(R.color.error)
+                      }
+                  )
+                },
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(10.dp)
             )
@@ -72,6 +90,19 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
                 onValueChange = { emailValue = it },
                 isError = authUiState.value.fieldErrors["createEmail"] != null,
                 label = { Text(stringResource(R.string.email)) },
+                leadingIcon = {
+                  Icon(
+                      imageVector = Icons.Default.Email,
+                      contentDescription = null,
+                      tint =
+                      if(authUiState.value.fieldErrors["createEmail"] == null){
+                          colorResource(R.color.main)
+                      }
+                      else{
+                        colorResource(R.color.error)
+                      }
+                  )
+                },
                 shape = RoundedCornerShape(10.dp),
                 modifier = Modifier.padding(10.dp)
             )
@@ -82,6 +113,19 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
                 onValueChange = { passValue = it },
                 isError = authUiState.value.fieldErrors["createPass1"] != null,
                 label = { Text(stringResource(R.string.password)) },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = null,
+                        tint =
+                        if(authUiState.value.fieldErrors["createEmail"] == null){
+                            colorResource(R.color.main)
+                        }
+                        else{
+                            colorResource(R.color.error)
+                        }
+                    )
+                },
                 shape = RoundedCornerShape(10.dp),
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.padding(10.dp)
@@ -93,6 +137,19 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
                 onValueChange = { confirmValue = it },
                 isError = authUiState.value.fieldErrors["createPass2"] != null,
                 label = { Text(stringResource(R.string.confirm_password)) },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Default.Lock,
+                        contentDescription = null,
+                        tint =
+                        if(authUiState.value.fieldErrors["createEmail"] == null){
+                            colorResource(R.color.main)
+                        }
+                        else{
+                            colorResource(R.color.error)
+                        }
+                    )
+                },
                 shape = RoundedCornerShape(10.dp),
                 visualTransformation = PasswordVisualTransformation(),
                 modifier = Modifier.padding(10.dp)

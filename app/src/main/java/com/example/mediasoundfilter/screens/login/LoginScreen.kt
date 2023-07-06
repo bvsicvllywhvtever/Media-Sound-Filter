@@ -1,6 +1,5 @@
 package com.example.mediasoundfilter.screens.login
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -25,9 +25,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
@@ -74,15 +72,15 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
                 isError = authUiState.value.fieldErrors["loginEmail"] != null,
                 label = {Text(stringResource(R.string.email))},
                 leadingIcon = {
-                    Image(
-                        painter = painterResource(R.drawable.account),
+                    Icon(
+                        imageVector = Icons.Default.Email,
                         contentDescription = null,
-                        colorFilter =
+                        tint =
                         if (authUiState.value.fieldErrors["loginEmail"] == null){
-                            ColorFilter.tint(colorResource(R.color.main))
+                            colorResource(R.color.main)
                         }
                         else{
-                            ColorFilter.tint(colorResource(R.color.error))
+                            colorResource(R.color.error)
                         }
                     )},
                 shape = RoundedCornerShape(10.dp),
