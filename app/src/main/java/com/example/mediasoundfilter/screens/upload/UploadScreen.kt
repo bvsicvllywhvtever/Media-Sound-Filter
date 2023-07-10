@@ -28,12 +28,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.mediasoundfilter.R
 import com.example.mediasoundfilter.nav.NavBar
+import com.example.mediasoundfilter.viewmodel.UploadViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UploadScreen(navRoutes: Array<() -> Unit>, navigateToMedia: () -> Unit) {
+fun UploadScreen(navRoutes: Array<() -> Unit>, navController: NavHostController, uploadViewModel: UploadViewModel) {
     Scaffold(
         content = { padding ->
             Column (
@@ -66,7 +68,11 @@ fun UploadScreen(navRoutes: Array<() -> Unit>, navigateToMedia: () -> Unit) {
                     modifier = Modifier.padding(20.dp)
                 )
                 Button(
-                    onClick = navigateToMedia,
+                    onClick = {
+                        uploadViewModel.extractVideoId(linkValue)
+                        val id = uploadViewModel.uploadUiState.value.videoId
+                        navController.navigate("media/$id")
+                              },
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
                 ) {
@@ -81,5 +87,5 @@ fun UploadScreen(navRoutes: Array<() -> Unit>, navigateToMedia: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun UploadScreenPreview() {
-    UploadScreen(arrayOf({}, {}, {})) {}
+    //UploadScreen(arrayOf({}, {}, {}), NavHostController())
 }
