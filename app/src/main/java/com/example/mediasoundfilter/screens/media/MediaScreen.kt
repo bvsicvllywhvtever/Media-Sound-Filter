@@ -22,14 +22,16 @@ import com.example.mediasoundfilter.youtube.YoutubePlayerComposeView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MediaScreen(navRoutes: Array<() -> Unit>) {
+fun MediaScreen(navRoutes: Array<() -> Unit>, videoId: String?) {
     Scaffold(
         content = { padding ->
             Column(
                 modifier = Modifier
                     .padding(padding)
             ) {
-                YoutubePlayerComposeView(videoId = "pBk4NYhWNMM") //check if this can have a content desc
+                if (videoId != null) {
+                    YoutubePlayerComposeView(videoId) //check if this can have a content desc
+                }
 
                 Column(
                     modifier = Modifier.padding(10.dp, 5.dp)
@@ -75,5 +77,5 @@ fun MediaScreen(navRoutes: Array<() -> Unit>) {
 @Preview(showBackground = true)
 @Composable
 fun MediaScreenPreview() {
-    MediaScreen(arrayOf({}, {}, {}))
+    //MediaScreen(arrayOf({}, {}, {}))
 }
