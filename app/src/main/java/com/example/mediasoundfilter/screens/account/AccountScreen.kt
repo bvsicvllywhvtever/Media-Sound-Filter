@@ -22,12 +22,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
 import com.example.mediasoundfilter.nav.NavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AccountScreen(navRoutes: Array<() -> Unit>, navigateToMedia: () -> Unit) {
+fun AccountScreen(navController: NavController) {
     Scaffold(
         topBar = {},
         content = { padding ->
@@ -56,7 +58,7 @@ fun AccountScreen(navRoutes: Array<() -> Unit>, navigateToMedia: () -> Unit) {
                             modifier = Modifier
                                 .padding(10.dp)
                                 .clickable(
-                                    onClick = navigateToMedia
+                                    onClick = { navController.navigate("media") }
                                 )
                         ){
                             Image(
@@ -95,12 +97,12 @@ fun AccountScreen(navRoutes: Array<() -> Unit>, navigateToMedia: () -> Unit) {
                 }
             }
         },
-        bottomBar = {NavBar(navRoutes)}
+        bottomBar = {NavBar(navController)}
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun AccountScreenPreview() {
-    AccountScreen(arrayOf({}, {}, {}), {})
+    AccountScreen(rememberNavController())
 }

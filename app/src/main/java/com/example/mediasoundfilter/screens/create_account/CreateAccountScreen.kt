@@ -30,7 +30,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
 import com.example.mediasoundfilter.screens.error.BottomErrorText
 import com.example.mediasoundfilter.screens.error.ErrorText
@@ -177,5 +179,5 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun CreateAccountScreenPreview() {
-    //CreateAccountScreen({})
+    CreateAccountScreen(viewModel(), rememberNavController())
 }
