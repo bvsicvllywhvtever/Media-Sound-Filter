@@ -35,13 +35,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
 import com.example.mediasoundfilter.nav.NavBar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(navRoutes: Array<() -> Unit>) {
+fun SearchScreen(navController: NavController) {
     Scaffold(
         content = { padding ->
             Column(modifier = Modifier
@@ -116,12 +118,12 @@ fun SearchScreen(navRoutes: Array<() -> Unit>) {
                 }
             }
         },
-        bottomBar = {NavBar(navRoutes)}
+        bottomBar = {NavBar(navController)}
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun SearchScreenPreview() {
-    SearchScreen(arrayOf({}, {}, {}))
+    SearchScreen(rememberNavController())
 }

@@ -28,14 +28,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
 import com.example.mediasoundfilter.nav.NavBar
 import com.example.mediasoundfilter.viewmodel.UploadViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UploadScreen(navRoutes: Array<() -> Unit>, navController: NavHostController, uploadViewModel: UploadViewModel) {
+fun UploadScreen(uploadViewModel: UploadViewModel, navController: NavHostController) {
     Scaffold(
         content = { padding ->
             Column (
@@ -80,12 +82,12 @@ fun UploadScreen(navRoutes: Array<() -> Unit>, navController: NavHostController,
                 }
             }
         },
-        bottomBar = {NavBar(navRoutes)}
+        bottomBar = {NavBar(navController)}
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun UploadScreenPreview() {
-    //UploadScreen(arrayOf({}, {}, {}), NavHostController())
+    UploadScreen(viewModel(), rememberNavController())
 }

@@ -18,10 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.mediasoundfilter.R
 
 @Composable
-fun NavBar(navRoutes: Array<() -> Unit>) {
+fun NavBar(navController: NavController) {
     Row(
         horizontalArrangement = Arrangement.SpaceEvenly,
         modifier = Modifier
@@ -37,7 +38,7 @@ fun NavBar(navRoutes: Array<() -> Unit>) {
             modifier = Modifier
                 .fillMaxHeight(.75f)
                 .align(Alignment.CenterVertically)
-                .clickable(onClick = navRoutes[0]),
+                .clickable(onClick = {navController.navigate("account")}),
             contentScale = ContentScale.FillHeight
         )
         Divider(
@@ -52,7 +53,7 @@ fun NavBar(navRoutes: Array<() -> Unit>) {
             modifier = Modifier
                 .fillMaxHeight(.75f)
                 .align(Alignment.CenterVertically)
-                .clickable(onClick = navRoutes[1]),
+                .clickable(onClick = {navController.navigate("upload")}),
             contentScale = ContentScale.FillHeight
         )
         Divider(
@@ -67,7 +68,7 @@ fun NavBar(navRoutes: Array<() -> Unit>) {
             modifier = Modifier
                 .fillMaxHeight(.75f)
                 .align(Alignment.CenterVertically)
-                .clickable(onClick = navRoutes[2]),
+                .clickable(onClick = {navController.navigate("search")}),
             contentScale = ContentScale.FillHeight
         )
     }
@@ -77,5 +78,5 @@ fun NavBar(navRoutes: Array<() -> Unit>) {
 @Preview(showBackground=true)
 @Composable
 fun NavBarPreview() {
-    NavBar(arrayOf())
+    //NavBar()
 }

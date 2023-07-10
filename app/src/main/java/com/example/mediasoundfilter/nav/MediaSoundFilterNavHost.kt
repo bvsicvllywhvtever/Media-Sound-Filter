@@ -19,22 +19,18 @@ fun MediaSoundFilterNavHost(
        navController = navController,
        startDestination = "upload"
    ) {
-       val navRoutes = arrayOf( {navController.navigate("account")},
-           {navController.navigate("upload")},
-           {navController.navigate("search")})
-
        composable("upload") {
-           UploadScreen(navRoutes, navController, uploadViewModel)
+           UploadScreen(uploadViewModel, navController)
        }
        composable("account") {
-           AccountScreen(navRoutes) { navController.navigate("media") }
+           AccountScreen(navController)
        }
        composable("search") {
-           SearchScreen(navRoutes)
+           SearchScreen(navController)
        }
        composable("media/{videoId}") { backStackEntry ->
            val videoId = backStackEntry.arguments?.getString("videoId")
-           MediaScreen(navRoutes, videoId)
+           MediaScreen(navController, videoId)
        }
    }
 }

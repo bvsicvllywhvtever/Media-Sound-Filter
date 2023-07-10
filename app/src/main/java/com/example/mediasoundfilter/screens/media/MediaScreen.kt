@@ -16,13 +16,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
 import com.example.mediasoundfilter.nav.NavBar
 import com.example.mediasoundfilter.youtube.YoutubePlayerComposeView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MediaScreen(navRoutes: Array<() -> Unit>, videoId: String?) {
+fun MediaScreen(navController: NavController, videoId: String?) {
     Scaffold(
         content = { padding ->
             Column(
@@ -70,12 +72,12 @@ fun MediaScreen(navRoutes: Array<() -> Unit>, videoId: String?) {
                 }
             }
         },
-        bottomBar = {NavBar(navRoutes)}
+        bottomBar = {NavBar(navController)}
     )
 }
 
 @Preview(showBackground = true)
 @Composable
 fun MediaScreenPreview() {
-    //MediaScreen(arrayOf({}, {}, {}))
+    MediaScreen(rememberNavController(), null)
 }
