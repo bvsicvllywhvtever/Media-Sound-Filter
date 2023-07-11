@@ -14,6 +14,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,11 +35,23 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
 import com.example.mediasoundfilter.nav.NavBar
+import com.example.mediasoundfilter.screens.error.BottomErrorText
 import com.example.mediasoundfilter.viewmodel.UploadViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UploadScreen(uploadViewModel: UploadViewModel, navController: NavHostController) {
+
+    val uploadUiState = uploadViewModel.uploadUiState.collectAsState()
+
+    val videoId = uploadUiState.value.videoId
+    LaunchedEffect(videoId){
+        videoId?.let{
+            navController.navigate("media/$it")
+            uploadViewModel.resetState()
+        }
+    }
+
     Scaffold(
         content = { padding ->
             Column (
@@ -70,16 +84,13 @@ fun UploadScreen(uploadViewModel: UploadViewModel, navController: NavHostControl
                     modifier = Modifier.padding(20.dp)
                 )
                 Button(
-                    onClick = {
-                        uploadViewModel.extractVideoId(linkValue)
-                        val id = uploadViewModel.uploadUiState.value.videoId
-                        navController.navigate("media/$id")
-                              },
+                    onClick = {uploadViewModel.extractVideoId(linkValue)},
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
                 ) {
                     Text(stringResource(R.string.upload))
                 }
+                uploadUiState.value.linkError?.let{BottomErrorText(it)}
             }
         },
         bottomBar = {NavBar(navController)}
