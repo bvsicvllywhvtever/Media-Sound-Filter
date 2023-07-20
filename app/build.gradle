@@ -4,11 +4,15 @@ plugins {
     id 'com.google.gms.google-services'
 }
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 android {
     namespace 'com.example.mediasoundfilter'
     compileSdk 33
 
     defaultConfig {
+        buildConfigField "String", "GOOGLE_API_KEY", localProperties['googleApiKey']
         applicationId "com.example.mediasoundfilter"
         minSdk 24
         targetSdk 33
@@ -35,6 +39,7 @@ android {
         jvmTarget = '1.8'
     }
     buildFeatures {
+        buildConfig = true
         compose true
     }
     composeOptions {
@@ -48,7 +53,6 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
@@ -62,6 +66,11 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:32.1.1')
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:12.0.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation 'com.squareup.moshi:moshi:1.15.0'
+    implementation "com.squareup.okhttp3:okhttp:4.11.0"
+    implementation 'com.squareup.moshi:moshi-kotlin:1.15.0'
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
