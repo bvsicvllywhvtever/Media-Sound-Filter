@@ -1,10 +1,13 @@
 package com.example.mediasoundfilter.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.mediasoundfilter.repository.VideoRepository
 import com.example.mediasoundfilter.uistate.UploadUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 
 class UploadViewModel: ViewModel() {
     private val _uploadUiState = MutableStateFlow(UploadUiState())
@@ -27,7 +30,7 @@ class UploadViewModel: ViewModel() {
             val pattern5 = Regex("""^youtu\.be/([A-Za-z0-9])+${'$'}""")
 
             //check if link matches any of the possible formats and get the videoId
-            var id: String? = null
+            var id: String = ""
             //patterns 1-3 are typical youtube urls
             if(pattern1.containsMatchIn(link) || pattern2.containsMatchIn(link) || pattern3.containsMatchIn(link)){
                 id = link.substringAfter('=')
@@ -38,19 +41,20 @@ class UploadViewModel: ViewModel() {
             }
 
             //check if videoId is valid, and update state accordingly
-            val idIsValid = isVideoIdValid(id)
-
-            if(idIsValid){
-                _uploadUiState.value = _uploadUiState.value.copy(videoId = id)
-            }
-            else{
-                _uploadUiState.value = _uploadUiState.value.copy(linkError = "Youtube link is not valid.")
+            viewModelScope.launch {
+                val isIdValid = isVideoIdValid(id)
+                if (isIdValid) {
+                    _uploadUiState.value = _uploadUiState.value.copy(videoId = id)
+                } else {
+                    _uploadUiState.value =
+                        _uploadUiState.value.copy(linkError = "Youtube link is not valid.")
+                }
             }
         }
     }
 
-    private fun isVideoIdValid(id: String?): Boolean{
-        return false
+    private suspend fun isVideoIdValid(id: String): Boolean{
+        return VideoRepository.getVideoById(id) != null
     }
 
     fun resetState(){
