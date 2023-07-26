@@ -10,6 +10,7 @@
     <string name="upload">Upload</string>
     <string name="saved">Saved Videos</string>
     <string name="mute_sounds">Mute Sounds</string>
+    <string name="mute_sounds_title">Which sounds would you like to mute from</string>
     <string name="arrow">Back Arrow</string>
     <string name="search">Search</string>
     <string name="account">Account</string>
@@ -19,11 +20,5 @@
     <string name="email">Email</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="link">Link</string>
-
-    <string-array name="trigger_sounds">
-        <item>Throat Clearing</item>
-        <item>Typing</item>
-        <item>Chewing</item>
-        <item>Yawning</item>
-    </string-array>
+    <string name="watch_video">Watch Video</string>
 </resources>

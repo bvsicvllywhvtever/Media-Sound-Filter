@@ -46,8 +46,7 @@ fun UploadScreen(uploadViewModel: UploadViewModel, navController: NavHostControl
     val videoId = uploadUiState.value.videoId
     LaunchedEffect(videoId){
         videoId?.let{
-            navController.navigate("media/$it")
-            uploadViewModel.resetState()
+            navController.navigate("sounds")
         }
     }
 
