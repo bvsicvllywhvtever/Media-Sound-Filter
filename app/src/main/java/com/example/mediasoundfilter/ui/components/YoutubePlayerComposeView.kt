@@ -7,6 +7,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.FullscreenListener
@@ -14,10 +15,16 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.options.IFram
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 
 @Composable
-fun YoutubePlayerComposeView(videoId: String){
+fun YoutubePlayerComposeView(videoId: String, muteTimes: List<Pair<Double, Double>>){
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
     val youTubePlayerView = remember{YouTubePlayerView(context)}
+
+    var isMuted = false
+    var isPlaying = false
+    var idx = 0
+    var start = muteTimes.get(0).first
+    var end = muteTimes.get(0).second
 
     youTubePlayerView.enableAutomaticInitialization = false
     youTubePlayerView.addFullscreenListener(object : FullscreenListener{
@@ -36,6 +43,32 @@ fun YoutubePlayerComposeView(videoId: String){
             override fun onReady(youTubePlayer: YouTubePlayer){
                 youTubePlayer.loadVideo(videoId, 0F)
             }
+
+            override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
+                isPlaying = state == PlayerConstants.PlayerState.PLAYING
+            }
+
+            override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
+                if(isPlaying) {
+                    when {
+                        second in start..end && !isMuted -> {
+                            youTubePlayer.mute()
+                            isMuted = true
+                        }
+
+                        second > end && isMuted -> {
+                            youTubePlayer.unMute()
+                            isMuted = false
+                            if(idx < muteTimes.size - 1){
+                                idx++
+                                start = muteTimes.get(idx).first
+                                end = muteTimes.get(idx).second
+                            }
+                        }
+                    }
+                }
+            }
+
         }, true, iFramePlayerOptions)
     }
 
