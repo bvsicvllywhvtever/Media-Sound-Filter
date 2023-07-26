@@ -66,4 +66,31 @@ class UploadViewModel: ViewModel() {
     fun clearLinkError(){
         _uploadUiState.value = _uploadUiState.value.copy(linkError = null)
     }
+
+    fun setSounds(){
+        val speechList = listOf("Babbling", "Shouting", "Whispering", "Crying", "Baby Crying",
+            "Whimpering", "Sighing", "Singing", "Humming", "Groaning", "Grunting", "Whistling",
+            "Breathing", "Wheezing", "Snoring", "Gasping", "Panting", "Coughing", "Throat Clearing",
+            "Eating", "Gargling", "Burping", "Hiccuping")
+        val humanList = listOf("Sneezing", "Sniffing", "Farting")
+        val movementList = listOf("Footsteps", "Finger Snapping", "Clapping")
+        val environmentalList = listOf("Knocking", "Slamming", "Tapping", "Squeaking", "Drawer/Cupboard",
+            "Pots and Pans", "Silverware", "Vacuum Cleaner", "Typing", "Clock", "Filing", "Clink",
+            "Squish", "Clicking", "TV")
+        val phoneList = listOf("Siren", "Phone Ringing", "Phone Dialing", "Dial Tone", "Alarm Clock",
+            "Buzzer", "Foghorn", "Whistle", "Beep", "Ding")
+        val sounds = mapOf("Speech/Mouth" to speechList, "Other Human Noises" to humanList,
+            "Human Movement" to movementList, "Environmental Movement" to environmentalList,
+            "Phone/Alarms" to phoneList)
+
+        _uploadUiState.value = _uploadUiState.value.copy(muteSounds = sounds)
+    }
+
+    fun setSelectedSounds(item: String){
+        val newSelections = _uploadUiState.value.selectedSounds.toMutableMap()
+        newSelections[item] = !(newSelections[item] ?: false)
+
+        _uploadUiState.value = _uploadUiState.value.copy(selectedSounds = newSelections)
+    }
+
 }

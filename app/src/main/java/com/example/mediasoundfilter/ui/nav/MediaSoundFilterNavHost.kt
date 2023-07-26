@@ -8,6 +8,7 @@ import com.example.mediasoundfilter.ui.screens.account.AccountScreen
 import com.example.mediasoundfilter.ui.screens.media.MediaScreen
 import com.example.mediasoundfilter.ui.screens.media.MediaViewModel
 import com.example.mediasoundfilter.ui.screens.search.SearchScreen
+import com.example.mediasoundfilter.ui.screens.upload.SoundsScreen
 import com.example.mediasoundfilter.ui.screens.upload.UploadScreen
 import com.example.mediasoundfilter.ui.screens.upload.UploadViewModel
 
@@ -29,6 +30,9 @@ fun MediaSoundFilterNavHost(
        }
        composable("search") {
            SearchScreen(navController)
+       }
+       composable("sounds"){
+           SoundsScreen(uploadViewModel, navController)
        }
        composable("media/{videoId}") { backStackEntry ->
            val videoId = backStackEntry.arguments?.getString("videoId")
