@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
@@ -24,7 +25,8 @@ import com.example.mediasoundfilter.ui.components.YoutubePlayerComposeView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MediaScreen(navController: NavController, videoId: String?) {
+fun MediaScreen(mediaViewModel: MediaViewModel, navController: NavController, videoId: String?) {
+
     Scaffold(
         content = { padding ->
             Column(
@@ -32,7 +34,7 @@ fun MediaScreen(navController: NavController, videoId: String?) {
                     .padding(padding)
             ) {
                 if (videoId != null) {
-                    YoutubePlayerComposeView(videoId) //check if this can have a content desc
+                    YoutubePlayerComposeView(videoId, mediaViewModel.getMuteTimes()) //check if this can have a content desc
                 }
 
                 Column(
@@ -79,5 +81,5 @@ fun MediaScreen(navController: NavController, videoId: String?) {
 @Preview(showBackground = true)
 @Composable
 fun MediaScreenPreview() {
-    MediaScreen(rememberNavController(), null)
+    MediaScreen(viewModel(), rememberNavController(), null)
 }
