@@ -1,4 +1,4 @@
-package com.example.mediasoundfilter.ui.screens.upload
+package com.example.mediasoundfilter.ui.screens.media
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -39,11 +39,11 @@ import com.example.mediasoundfilter.ui.screens.error.BottomErrorText
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UploadScreen(uploadViewModel: UploadViewModel, navController: NavHostController) {
+fun UploadScreen(mediaViewModel: MediaViewModel, navController: NavHostController) {
 
-    val uploadUiState = uploadViewModel.uploadUiState.collectAsState()
+    val mediaUiState = mediaViewModel.mediaUiState.collectAsState()
 
-    val videoId = uploadUiState.value.videoId
+    val videoId = mediaUiState.value.videoId
     LaunchedEffect(videoId){
         videoId?.let{
             navController.navigate("sounds")
@@ -82,13 +82,13 @@ fun UploadScreen(uploadViewModel: UploadViewModel, navController: NavHostControl
                     modifier = Modifier.padding(20.dp)
                 )
                 Button(
-                    onClick = {uploadViewModel.extractVideoId(linkValue)},
+                    onClick = {mediaViewModel.extractVideoId(linkValue)},
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
                 ) {
                     Text(stringResource(R.string.upload))
                 }
-                uploadUiState.value.linkError?.let{ BottomErrorText(it) }
+                mediaUiState.value.linkError?.let{ BottomErrorText(it) }
             }
         },
         bottomBar = { NavBar(navController) }
