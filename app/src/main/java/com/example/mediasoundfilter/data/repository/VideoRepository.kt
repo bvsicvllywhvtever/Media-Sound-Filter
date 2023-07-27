@@ -1,8 +1,8 @@
 package com.example.mediasoundfilter.data.repository
 
 import com.example.mediasoundfilter.data.api.YoutubeApi
-import com.example.mediasoundfilter.domain.model.Video
 import com.example.mediasoundfilter.data.responsemodel.VideoDTO
+import com.example.mediasoundfilter.domain.model.Video
 
 object VideoRepository {
     suspend fun getVideoById(id: String): Video? {
@@ -18,8 +18,8 @@ object VideoRepository {
 
     private fun mapToVideo(videoDTO: VideoDTO): Video {
         return Video(
-            title = videoDTO.title,
-            channelTitle = videoDTO.channelTitle
+            title = videoDTO.snippet.title,
+            channelTitle = videoDTO.snippet.channelTitle
         )
     }
 }

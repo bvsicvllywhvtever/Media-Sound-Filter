@@ -9,12 +9,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.example.mediasoundfilter.ui.screens.upload.UploadViewModel
+import com.example.mediasoundfilter.ui.screens.media.MediaViewModel
 
 @Composable
-fun AdaptableGrid(rowSize: Int, sounds: List<String>, uploadViewModel: UploadViewModel) {
+fun AdaptableGrid(rowSize: Int, sounds: List<String>, uploadViewModel: MediaViewModel) {
 
-    val uploadUiState = uploadViewModel.uploadUiState.collectAsState()
+    val uploadUiState = uploadViewModel.mediaUiState.collectAsState()
 
     sounds.chunked(rowSize).forEach{ group ->
         Row(

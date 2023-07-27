@@ -1,4 +1,4 @@
-package com.example.mediasoundfilter.ui.screens.upload
+package com.example.mediasoundfilter.ui.screens.media
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -21,26 +21,29 @@ import com.example.mediasoundfilter.ui.components.NavBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SoundsScreen(uploadViewModel: UploadViewModel, navController: NavController) {
+fun SoundsScreen(mediaViewModel: MediaViewModel, navController: NavController) {
 
-    val uploadUiState = uploadViewModel.uploadUiState.collectAsState()
-    val videoId = uploadUiState.value.videoId
+    val mediaUiState = mediaViewModel.mediaUiState.collectAsState()
+    val videoId = mediaUiState.value.videoId
 
-    uploadViewModel.setSounds()
+    mediaViewModel.setSounds()
 
     Scaffold(
         content = { padding ->
             Column(modifier = Modifier.padding(padding)) {
-                Text(stringResource(R.string.mute_sounds_title) + " " + "placeholder" + "?")
 
-                val soundCategories = uploadUiState.value.muteSounds.keys
+                val title = mediaUiState.value.videoTitle
+
+                Text(stringResource(R.string.mute_sounds_title) + " " + title + "?")
+
+                val soundCategories = mediaUiState.value.muteSounds.keys
                 for (cat in soundCategories) {
                     ExpandableCard(cat) {
-                        uploadUiState.value.muteSounds[cat]?.let {
+                        mediaUiState.value.muteSounds[cat]?.let {
                             AdaptableGrid(
                                 2,
                                 it,
-                                uploadViewModel
+                                mediaViewModel
                             )
                         }
                     }
@@ -50,7 +53,7 @@ fun SoundsScreen(uploadViewModel: UploadViewModel, navController: NavController)
                     content = { Text(stringResource(R.string.watch_video)) },
                     onClick = {
                         navController.navigate("media/$videoId")
-                        uploadViewModel.resetState()
+                        mediaViewModel.resetState()
                     }
                 )
             }

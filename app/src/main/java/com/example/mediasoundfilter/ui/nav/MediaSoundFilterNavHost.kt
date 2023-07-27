@@ -7,14 +7,12 @@ import androidx.navigation.compose.composable
 import com.example.mediasoundfilter.ui.screens.account.AccountScreen
 import com.example.mediasoundfilter.ui.screens.media.MediaScreen
 import com.example.mediasoundfilter.ui.screens.media.MediaViewModel
+import com.example.mediasoundfilter.ui.screens.media.SoundsScreen
+import com.example.mediasoundfilter.ui.screens.media.UploadScreen
 import com.example.mediasoundfilter.ui.screens.search.SearchScreen
-import com.example.mediasoundfilter.ui.screens.upload.SoundsScreen
-import com.example.mediasoundfilter.ui.screens.upload.UploadScreen
-import com.example.mediasoundfilter.ui.screens.upload.UploadViewModel
 
 @Composable
 fun MediaSoundFilterNavHost(
-    uploadViewModel: UploadViewModel,
     mediaViewModel: MediaViewModel,
     navController: NavHostController
 ) {
@@ -23,7 +21,7 @@ fun MediaSoundFilterNavHost(
        startDestination = "upload"
    ) {
        composable("upload") {
-           UploadScreen(uploadViewModel, navController)
+           UploadScreen(mediaViewModel, navController)
        }
        composable("account") {
            AccountScreen(navController)
@@ -32,7 +30,7 @@ fun MediaSoundFilterNavHost(
            SearchScreen(navController)
        }
        composable("sounds"){
-           SoundsScreen(uploadViewModel, navController)
+           SoundsScreen(mediaViewModel, navController)
        }
        composable("media/{videoId}") { backStackEntry ->
            val videoId = backStackEntry.arguments?.getString("videoId")
