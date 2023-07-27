@@ -3,6 +3,7 @@ package com.example.mediasoundfilter.ui.screens.media
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mediasoundfilter.data.repository.VideoRepository
+import com.example.mediasoundfilter.domain.model.Video
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -11,7 +12,6 @@ import kotlinx.coroutines.launch
 class MediaViewModel: ViewModel() {
     private val _mediaUiState = MutableStateFlow(MediaUiState())
     val mediaUiState: StateFlow<MediaUiState> = _mediaUiState.asStateFlow()
-
 
     fun extractVideoId(link: String){
 
@@ -41,8 +41,9 @@ class MediaViewModel: ViewModel() {
 
             //check if videoId is valid, and update state accordingly
             viewModelScope.launch {
-                if (isVideoIdValid(id)) {
-                    _mediaUiState.value = _mediaUiState.value.copy(videoId = id)
+                val video = getVideoFromId(id)
+                if (video != null) {
+                    _mediaUiState.value = _mediaUiState.value.copy(videoId = id, videoTitle = video.title, channelTitle = video.channelTitle)
                 } else {
                     _mediaUiState.value =
                         _mediaUiState.value.copy(linkError = "Youtube link is not valid.")
@@ -51,8 +52,8 @@ class MediaViewModel: ViewModel() {
         }
     }
 
-    private suspend fun isVideoIdValid(id: String): Boolean{
-        return VideoRepository.getVideoById(id) != null
+    private suspend fun getVideoFromId(id: String): Video? {
+        return VideoRepository.getVideoById(id)
     }
 
     fun resetState(){

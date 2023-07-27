@@ -31,7 +31,10 @@ fun SoundsScreen(mediaViewModel: MediaViewModel, navController: NavController) {
     Scaffold(
         content = { padding ->
             Column(modifier = Modifier.padding(padding)) {
-                Text(stringResource(R.string.mute_sounds_title) + " " + "placeholder" + "?")
+
+                val title = mediaUiState.value.videoTitle
+
+                Text(stringResource(R.string.mute_sounds_title) + " " + title + "?")
 
                 val soundCategories = mediaUiState.value.muteSounds.keys
                 for (cat in soundCategories) {

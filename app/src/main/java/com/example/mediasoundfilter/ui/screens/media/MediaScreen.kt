@@ -6,6 +6,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -19,6 +20,8 @@ import com.example.mediasoundfilter.ui.components.YoutubePlayerComposeView
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MediaScreen(mediaViewModel: MediaViewModel, navController: NavController, videoId: String?) {
+
+    val mediaUiState = mediaViewModel.mediaUiState.collectAsState()
 
     Scaffold(
         content = { padding ->
@@ -34,11 +37,11 @@ fun MediaScreen(mediaViewModel: MediaViewModel, navController: NavController, vi
                     modifier = Modifier.padding(10.dp, 5.dp)
                 ) {
                     Text(
-                        text = "insert dynamic content here with multiple lines",
+                        text = mediaUiState.value.videoTitle ?: "",
                         fontSize = 20.sp
                     )
                     Text(
-                        text = "Uploaded By Test",
+                        text = mediaUiState.value.channelTitle ?: "",
                         fontSize = 16.sp
                     )
                 }
