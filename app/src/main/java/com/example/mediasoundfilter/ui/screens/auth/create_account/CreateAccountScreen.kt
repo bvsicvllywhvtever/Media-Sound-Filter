@@ -17,6 +17,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,9 +35,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
+import com.example.mediasoundfilter.ui.screens.auth.AuthViewModel
 import com.example.mediasoundfilter.ui.screens.error.BottomErrorText
 import com.example.mediasoundfilter.ui.screens.error.ErrorText
-import com.example.mediasoundfilter.ui.screens.auth.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,6 +48,13 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
     var confirmValue by remember { mutableStateOf("") }
 
     val authUiState = authViewModel.authUiState.collectAsState()
+    val success = authUiState.value.createAccountSuccess
+
+    LaunchedEffect(success){
+        if (success){
+            navController.navigate("login")
+        }
+    }
 
     Column (
         verticalArrangement = Arrangement.Center,
@@ -162,9 +170,6 @@ fun CreateAccountScreen(authViewModel: AuthViewModel, navController: NavHostCont
         Button(
             onClick = {
                 authViewModel.createAccount(userValue, emailValue, passValue, confirmValue)
-                if (authUiState.value.createAccountSuccess){
-                    navController.navigate("login")
-                }
             },
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
