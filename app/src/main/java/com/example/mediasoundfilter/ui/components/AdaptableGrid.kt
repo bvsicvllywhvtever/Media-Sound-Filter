@@ -9,12 +9,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.example.mediasoundfilter.ui.screens.media.MediaViewModel
+import com.example.mediasoundfilter.ui.screens.video.sounds.SoundsViewModel
 
 @Composable
-fun AdaptableGrid(rowSize: Int, sounds: List<String>, uploadViewModel: MediaViewModel) {
+fun AdaptableGrid(rowSize: Int, sounds: List<String>, soundsViewModel: SoundsViewModel) {
 
-    val uploadUiState = uploadViewModel.mediaUiState.collectAsState()
+    val soundsUiState = soundsViewModel.soundsUiState.collectAsState()
 
     sounds.chunked(rowSize).forEach{ group ->
         Row(
@@ -24,9 +24,9 @@ fun AdaptableGrid(rowSize: Int, sounds: List<String>, uploadViewModel: MediaView
             group.forEach { item ->
                 Row(Modifier.weight(1f)){
                     RadioButton(
-                        selected = (uploadUiState.value.selectedSounds[item] ?: false),
+                        selected = (soundsUiState.value.selectedSounds[item] ?: false),
                         onClick = {
-                            uploadViewModel.setSelectedSounds(item)
+                            soundsViewModel.setSelectedSounds(item)
                         }
                     )
                     Text(item)

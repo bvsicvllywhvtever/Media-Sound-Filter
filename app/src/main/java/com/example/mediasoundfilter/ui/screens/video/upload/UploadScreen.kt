@@ -1,4 +1,4 @@
-package com.example.mediasoundfilter.ui.screens.media
+package com.example.mediasoundfilter.ui.screens.video.upload
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -36,14 +36,18 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
 import com.example.mediasoundfilter.ui.components.NavBar
 import com.example.mediasoundfilter.ui.screens.error.BottomErrorText
+import com.example.mediasoundfilter.ui.screens.video.VideoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UploadScreen(mediaViewModel: MediaViewModel, navController: NavHostController) {
+fun UploadScreen(videoViewModel: VideoViewModel,
+                 uploadViewModel: UploadViewModel,
+                 navController: NavHostController) {
 
-    val mediaUiState = mediaViewModel.mediaUiState.collectAsState()
+    val videoUiState = videoViewModel.videoUiState.collectAsState()
+    val uploadUiState = uploadViewModel.uploadUiState.collectAsState()
 
-    val videoId = mediaUiState.value.videoId
+    val videoId = videoUiState.value.videoId
     LaunchedEffect(videoId){
         videoId?.let{
             navController.navigate("sounds")
@@ -82,13 +86,13 @@ fun UploadScreen(mediaViewModel: MediaViewModel, navController: NavHostControlle
                     modifier = Modifier.padding(20.dp)
                 )
                 Button(
-                    onClick = {mediaViewModel.extractVideoId(linkValue)},
+                    onClick = {videoViewModel.extractVideoId(linkValue)},
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
                 ) {
                     Text(stringResource(R.string.upload))
                 }
-                mediaUiState.value.linkError?.let{ BottomErrorText(it) }
+                videoUiState.value.linkError?.let{ BottomErrorText(it) }
             }
         },
         bottomBar = { NavBar(navController) }
@@ -98,5 +102,5 @@ fun UploadScreen(mediaViewModel: MediaViewModel, navController: NavHostControlle
 @Preview(showBackground = true)
 @Composable
 fun UploadScreenPreview() {
-    UploadScreen(viewModel(), rememberNavController())
+    UploadScreen(viewModel(), viewModel(), rememberNavController())
 }

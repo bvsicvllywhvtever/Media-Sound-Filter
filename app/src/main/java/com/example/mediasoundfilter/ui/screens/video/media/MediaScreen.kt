@@ -1,4 +1,4 @@
-package com.example.mediasoundfilter.ui.screens.media
+package com.example.mediasoundfilter.ui.screens.video.media
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -16,12 +16,17 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.ui.components.NavBar
 import com.example.mediasoundfilter.ui.components.YoutubePlayerComposeView
+import com.example.mediasoundfilter.ui.screens.video.VideoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MediaScreen(mediaViewModel: MediaViewModel, navController: NavController, videoId: String?) {
+fun MediaScreen(
+    videoViewModel: VideoViewModel,
+    mediaViewModel: MediaViewModel,
+    navController: NavController,
+    videoId: String?) {
 
-    val mediaUiState = mediaViewModel.mediaUiState.collectAsState()
+    val videoUiState = videoViewModel.videoUiState.collectAsState()
 
     Scaffold(
         content = { padding ->
@@ -37,11 +42,11 @@ fun MediaScreen(mediaViewModel: MediaViewModel, navController: NavController, vi
                     modifier = Modifier.padding(10.dp, 5.dp)
                 ) {
                     Text(
-                        text = mediaUiState.value.videoTitle ?: "",
+                        text = videoUiState.value.videoTitle ?: "",
                         fontSize = 20.sp
                     )
                     Text(
-                        text = mediaUiState.value.channelTitle ?: "",
+                        text = videoUiState.value.channelTitle ?: "",
                         fontSize = 16.sp
                     )
                 }
@@ -54,5 +59,5 @@ fun MediaScreen(mediaViewModel: MediaViewModel, navController: NavController, vi
 @Preview(showBackground = true)
 @Composable
 fun MediaScreenPreview() {
-    MediaScreen(viewModel(), rememberNavController(), null)
+    MediaScreen(viewModel(), viewModel(), rememberNavController(), null)
 }

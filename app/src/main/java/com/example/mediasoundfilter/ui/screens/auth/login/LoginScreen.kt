@@ -18,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -57,11 +56,11 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
         }
     }
 
-    DisposableEffect(Unit){
-        onDispose {
-            loginViewModel.resetState()
-        }
-    }
+//    DisposableEffect(Unit){
+//        onDispose {
+//            loginViewModel.resetState()
+//        }
+//    }
 
     Column(
         verticalArrangement = Arrangement.Center,

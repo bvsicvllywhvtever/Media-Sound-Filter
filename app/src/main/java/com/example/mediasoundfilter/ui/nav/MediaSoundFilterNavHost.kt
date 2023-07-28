@@ -10,18 +10,21 @@ import com.example.mediasoundfilter.ui.screens.auth.create_account.CreateAccount
 import com.example.mediasoundfilter.ui.screens.auth.create_account.CreateAccountViewModel
 import com.example.mediasoundfilter.ui.screens.auth.login.LoginScreen
 import com.example.mediasoundfilter.ui.screens.auth.login.LoginViewModel
-import com.example.mediasoundfilter.ui.screens.media.MediaScreen
-import com.example.mediasoundfilter.ui.screens.media.MediaViewModel
-import com.example.mediasoundfilter.ui.screens.media.SoundsScreen
-import com.example.mediasoundfilter.ui.screens.media.UploadScreen
 import com.example.mediasoundfilter.ui.screens.search.SearchScreen
+import com.example.mediasoundfilter.ui.screens.video.VideoViewModel
+import com.example.mediasoundfilter.ui.screens.video.media.MediaScreen
+import com.example.mediasoundfilter.ui.screens.video.media.MediaViewModel
+import com.example.mediasoundfilter.ui.screens.video.sounds.SoundsScreen
+import com.example.mediasoundfilter.ui.screens.video.sounds.SoundsViewModel
+import com.example.mediasoundfilter.ui.screens.video.upload.UploadScreen
+import com.example.mediasoundfilter.ui.screens.video.upload.UploadViewModel
 
 @Composable
 fun MediaSoundFilterNavHost(
     navController: NavHostController
 ) {
 
-    val mediaViewModel: MediaViewModel = viewModel()
+    val videoViewModel: VideoViewModel = viewModel()
 
     NavHost(
        navController = navController,
@@ -36,7 +39,8 @@ fun MediaSoundFilterNavHost(
            CreateAccountScreen(createAccountViewModel, navController)
        }
        composable("upload") {
-           UploadScreen(mediaViewModel, navController)
+           val uploadViewModel: UploadViewModel = viewModel()
+           UploadScreen(videoViewModel, uploadViewModel, navController)
        }
        composable("account") {
            AccountScreen(navController)
@@ -45,11 +49,13 @@ fun MediaSoundFilterNavHost(
            SearchScreen(navController)
        }
        composable("sounds"){
-           SoundsScreen(mediaViewModel, navController)
+           val soundsViewModel: SoundsViewModel = viewModel()
+           SoundsScreen(videoViewModel, soundsViewModel, navController)
        }
        composable("media/{videoId}") { backStackEntry ->
+           val mediaViewModel : MediaViewModel = viewModel()
            val videoId = backStackEntry.arguments?.getString("videoId")
-           MediaScreen(mediaViewModel, navController, videoId)
+           MediaScreen(videoViewModel, mediaViewModel, navController, videoId)
        }
    }
 }
