@@ -28,7 +28,7 @@ fun MediaSoundFilterNavHost(
 
     NavHost(
        navController = navController,
-       startDestination = "login"
+       startDestination = "upload"
     ) {
        composable("login") {
            val loginViewModel: LoginViewModel = viewModel()

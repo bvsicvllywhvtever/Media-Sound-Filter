@@ -5,14 +5,20 @@ import com.example.mediasoundfilter.data.responsemodel.VideoDTO
 import com.example.mediasoundfilter.domain.model.Video
 
 object VideoRepository {
-    suspend fun getVideoById(id: String): Video? {
+
+    private var currentVideo : Video? = null
+    fun getCurrentVideo(): Video? {
+        return currentVideo
+    }
+
+    suspend fun getVideoById(id: String) {
         val videos = YoutubeApi.apiService.getVideoById(id).body()?.items?.map { mapToVideo(it) } ?: emptyList()
 
         if(videos.size != 1){
-            return null
+            currentVideo = null
         }
         else{
-            return videos.get(0)
+            currentVideo = videos.get(0)
         }
     }
 

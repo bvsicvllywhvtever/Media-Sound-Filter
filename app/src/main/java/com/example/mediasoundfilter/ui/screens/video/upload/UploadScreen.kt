@@ -44,10 +44,10 @@ fun UploadScreen(videoViewModel: VideoViewModel,
                  uploadViewModel: UploadViewModel,
                  navController: NavHostController) {
 
-    val videoUiState = videoViewModel.videoUiState.collectAsState()
+    //val videoUiState = videoViewModel.videoUiState.collectAsState()
     val uploadUiState = uploadViewModel.uploadUiState.collectAsState()
 
-    val videoId = videoUiState.value.videoId
+    val videoId = uploadUiState.value.videoId
     LaunchedEffect(videoId){
         videoId?.let{
             navController.navigate("sounds")
@@ -86,13 +86,13 @@ fun UploadScreen(videoViewModel: VideoViewModel,
                     modifier = Modifier.padding(20.dp)
                 )
                 Button(
-                    onClick = {videoViewModel.extractVideoId(linkValue)},
+                    onClick = {uploadViewModel.extractVideoId(linkValue)},
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
                 ) {
                     Text(stringResource(R.string.upload))
                 }
-                videoUiState.value.linkError?.let{ BottomErrorText(it) }
+                uploadUiState.value.linkError?.let{ BottomErrorText(it) }
             }
         },
         bottomBar = { NavBar(navController) }
