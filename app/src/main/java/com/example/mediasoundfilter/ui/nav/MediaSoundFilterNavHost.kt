@@ -40,7 +40,7 @@ fun MediaSoundFilterNavHost(
        }
        composable("upload") {
            val uploadViewModel: UploadViewModel = viewModel()
-           UploadScreen(videoViewModel, uploadViewModel, navController)
+           UploadScreen(uploadViewModel, navController)
        }
        composable("account") {
            AccountScreen(navController)
@@ -50,7 +50,7 @@ fun MediaSoundFilterNavHost(
        }
        composable("sounds"){
            val soundsViewModel: SoundsViewModel = viewModel()
-           SoundsScreen(videoViewModel, soundsViewModel, navController)
+           SoundsScreen(soundsViewModel, navController)
        }
        composable("media/{videoId}") { backStackEntry ->
            val mediaViewModel : MediaViewModel = viewModel()

@@ -40,11 +40,11 @@ import com.example.mediasoundfilter.ui.screens.video.VideoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UploadScreen(videoViewModel: VideoViewModel,
+fun UploadScreen(
                  uploadViewModel: UploadViewModel,
                  navController: NavHostController) {
 
-    //val videoUiState = videoViewModel.videoUiState.collectAsState()
+
     val uploadUiState = uploadViewModel.uploadUiState.collectAsState()
 
     val videoId = uploadUiState.value.videoId
@@ -102,5 +102,5 @@ fun UploadScreen(videoViewModel: VideoViewModel,
 @Preview(showBackground = true)
 @Composable
 fun UploadScreenPreview() {
-    UploadScreen(viewModel(), viewModel(), rememberNavController())
+    UploadScreen( viewModel(), rememberNavController())
 }

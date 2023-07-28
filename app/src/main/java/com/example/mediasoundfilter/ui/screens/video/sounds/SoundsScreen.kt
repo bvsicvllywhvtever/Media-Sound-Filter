@@ -22,13 +22,12 @@ import com.example.mediasoundfilter.ui.screens.video.VideoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SoundsScreen(videoViewModel: VideoViewModel,
-                 soundsViewModel: SoundsViewModel,
+fun SoundsScreen(soundsViewModel: SoundsViewModel,
                  navController: NavController) {
 
-    val videoUiState = videoViewModel.videoUiState.collectAsState()
     val soundsUiState = soundsViewModel.soundsUiState.collectAsState()
-    val videoId = videoUiState.value.videoId
+    val videoTitle = soundsUiState.value.videoTitle
+    val videoId = soundsUiState.value.videoId
 
     soundsViewModel.setSounds()
 
@@ -36,7 +35,7 @@ fun SoundsScreen(videoViewModel: VideoViewModel,
         content = { padding ->
             Column(modifier = Modifier.padding(padding)) {
 
-                val title = videoUiState.value.videoTitle
+                val title = videoTitle
 
                 Text(stringResource(R.string.mute_sounds_title) + " " + title + "?")
 
@@ -56,7 +55,7 @@ fun SoundsScreen(videoViewModel: VideoViewModel,
                 Button(
                     content = { Text(stringResource(R.string.watch_video)) },
                     onClick = {
-                        navController.navigate("media/$videoId")
+                        navController.navigate("media/${videoId}")
                     }
                 )
             }
@@ -68,5 +67,5 @@ fun SoundsScreen(videoViewModel: VideoViewModel,
 @Preview(showBackground = true)
 @Composable
 fun SoundsScreenPreview(){
-    SoundsScreen(viewModel(), viewModel(), rememberNavController())
+    SoundsScreen(viewModel(), rememberNavController())
 }

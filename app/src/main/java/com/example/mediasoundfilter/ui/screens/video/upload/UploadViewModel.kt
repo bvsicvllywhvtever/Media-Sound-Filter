@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class UploadViewModel: ViewModel() {
+
+
     private val _uploadUiState = MutableStateFlow(UploadUiState())
     val uploadUiState = _uploadUiState.asStateFlow()
 
@@ -40,8 +42,8 @@ class UploadViewModel: ViewModel() {
 
             //check if videoId is valid, and update state accordingly
             viewModelScope.launch {
-                val video = getVideoFromId(id)
-                if (video != null) {
+                getVideoFromId(id)
+                if (VideoRepository.getCurrentVideo() != null) {
                     _uploadUiState.value = _uploadUiState.value.copy(videoId = id)
                 } else {
                     _uploadUiState.value =

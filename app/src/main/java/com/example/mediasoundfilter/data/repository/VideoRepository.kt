@@ -12,7 +12,7 @@ object VideoRepository {
     }
 
     suspend fun getVideoById(id: String) {
-        val videos = YoutubeApi.apiService.getVideoById(id).body()?.items?.map { mapToVideo(it) } ?: emptyList()
+        val videos = YoutubeApi.apiService.getVideoById(id).body()?.items?.map { mapToVideo(it, id) } ?: emptyList()
 
         if(videos.size != 1){
             currentVideo = null
@@ -22,8 +22,9 @@ object VideoRepository {
         }
     }
 
-    private fun mapToVideo(videoDTO: VideoDTO): Video {
+    private fun mapToVideo(videoDTO: VideoDTO, videoId: String): Video {
         return Video(
+            id = videoId,
             title = videoDTO.snippet.title,
             channelTitle = videoDTO.snippet.channelTitle
         )
