@@ -52,15 +52,14 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
 
     LaunchedEffect(currentUser){
         currentUser?.let{
-            navController.navigate("upload")
+            loginViewModel.resetState()
+            navController.navigate("upload"){
+                popUpTo(navController.graph.id){
+                    inclusive = true
+                }
+            }
         }
     }
-
-//    DisposableEffect(Unit){
-//        onDispose {
-//            loginViewModel.resetState()
-//        }
-//    }
 
     Column(
         verticalArrangement = Arrangement.Center,
@@ -144,6 +143,7 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
                 text = stringResource(R.string.sign_up_link),
                 color = colorResource(R.color.link),
                 modifier = Modifier.clickable(onClick = {
+                    loginViewModel.resetState()
                     navController.navigate("createAccount")
                 })
             )

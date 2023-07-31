@@ -51,6 +51,7 @@ fun CreateAccountScreen(createAccountViewModel: CreateAccountViewModel, navContr
 
     LaunchedEffect(success){
         if (success){
+            createAccountViewModel.resetState()
             navController.navigate("login")
         }
     }
