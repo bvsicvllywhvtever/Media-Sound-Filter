@@ -14,25 +14,6 @@ object VideoRepository {
 
     private var currentVideo: Video? = null
 
-
-    // Mutex to make writes to cached values thread-safe.
-//    private val latestNewsMutex = Mutex()
-//
-//    // Cache of the latest news got from the network.
-//    private var latestNews: List<ArticleHeadline> = emptyList()
-//
-//    suspend fun getLatestNews(refresh: Boolean = false): List<ArticleHeadline> {
-//        if (refresh || latestNews.isEmpty()) {
-//            val networkResult = newsRemoteDataSource.fetchLatestNews()
-//            // Thread-safe write to latestNews
-//            latestNewsMutex.withLock {
-//                this.latestNews = networkResult
-//            }
-//        }
-//
-//        return latestNewsMutex.withLock { this.latestNews }
-//    }
-
     suspend fun getCurrentVideoById(id: String) : Video? {
         val videos = YoutubeApi.apiService.getVideoById(id).body()?.items?.map { mapToVideo(it, id) } ?: emptyList()
         if(videos.size != 1){
