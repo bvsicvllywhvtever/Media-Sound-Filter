@@ -36,21 +36,19 @@ import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
 import com.example.mediasoundfilter.ui.components.NavBar
 import com.example.mediasoundfilter.ui.screens.error.BottomErrorText
-import com.example.mediasoundfilter.ui.screens.video.VideoViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UploadScreen(videoViewModel: VideoViewModel,
-                 uploadViewModel: UploadViewModel,
+fun UploadScreen(uploadViewModel: UploadViewModel,
                  navController: NavHostController) {
 
-    val videoUiState = videoViewModel.videoUiState.collectAsState()
     val uploadUiState = uploadViewModel.uploadUiState.collectAsState()
 
-    val videoId = videoUiState.value.videoId
-    LaunchedEffect(videoId){
-        videoId?.let{
+    val uploadSuccessful = uploadUiState.value.uploadSuccessful
+    LaunchedEffect(uploadSuccessful){
+        if(uploadSuccessful){
             navController.navigate("sounds")
+            uploadViewModel.resetState()
         }
     }
 
@@ -86,13 +84,13 @@ fun UploadScreen(videoViewModel: VideoViewModel,
                     modifier = Modifier.padding(20.dp)
                 )
                 Button(
-                    onClick = {videoViewModel.extractVideoId(linkValue)},
+                    onClick = {uploadViewModel.extractVideoId(linkValue)},
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
                 ) {
                     Text(stringResource(R.string.upload))
                 }
-                videoUiState.value.linkError?.let{ BottomErrorText(it) }
+                uploadUiState.value.linkError?.let{ BottomErrorText(it) }
             }
         },
         bottomBar = { NavBar(navController) }
@@ -102,5 +100,5 @@ fun UploadScreen(videoViewModel: VideoViewModel,
 @Preview(showBackground = true)
 @Composable
 fun UploadScreenPreview() {
-    UploadScreen(viewModel(), viewModel(), rememberNavController())
+    UploadScreen(viewModel(), rememberNavController())
 }

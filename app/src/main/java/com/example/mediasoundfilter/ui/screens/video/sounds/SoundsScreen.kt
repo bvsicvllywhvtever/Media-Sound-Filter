@@ -15,20 +15,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
+import com.example.mediasoundfilter.domain.model.Video
 import com.example.mediasoundfilter.ui.components.AdaptableGrid
 import com.example.mediasoundfilter.ui.components.ExpandableCard
 import com.example.mediasoundfilter.ui.components.NavBar
-import com.example.mediasoundfilter.ui.screens.video.VideoViewModel
+import com.example.mediasoundfilter.ui.screens.video.VideoSharedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SoundsScreen(videoViewModel: VideoViewModel,
+fun SoundsScreen(videoSharedViewModel: VideoSharedViewModel,
                  soundsViewModel: SoundsViewModel,
                  navController: NavController) {
 
-    val videoUiState = videoViewModel.videoUiState.collectAsState()
     val soundsUiState = soundsViewModel.soundsUiState.collectAsState()
-    val videoId = videoUiState.value.videoId
+    val video: Video = videoSharedViewModel.getCurrentVideo()!!
 
     soundsViewModel.setSounds()
 
@@ -36,7 +36,7 @@ fun SoundsScreen(videoViewModel: VideoViewModel,
         content = { padding ->
             Column(modifier = Modifier.padding(padding)) {
 
-                val title = videoUiState.value.videoTitle
+                val title = video.title
 
                 Text(stringResource(R.string.mute_sounds_title) + " " + title + "?")
 
@@ -56,7 +56,7 @@ fun SoundsScreen(videoViewModel: VideoViewModel,
                 Button(
                     content = { Text(stringResource(R.string.watch_video)) },
                     onClick = {
-                        navController.navigate("media/$videoId")
+                        navController.navigate("media")
                     }
                 )
             }

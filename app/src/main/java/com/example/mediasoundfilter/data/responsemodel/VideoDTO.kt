@@ -5,6 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class VideoDTO (
+    @Json(name = "id") val id: String,
     @Json(name = "snippet") val snippet: Snippet
 )
 

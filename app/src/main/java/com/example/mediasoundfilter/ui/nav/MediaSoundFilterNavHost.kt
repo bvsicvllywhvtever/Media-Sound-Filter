@@ -11,7 +11,7 @@ import com.example.mediasoundfilter.ui.screens.auth.create_account.CreateAccount
 import com.example.mediasoundfilter.ui.screens.auth.login.LoginScreen
 import com.example.mediasoundfilter.ui.screens.auth.login.LoginViewModel
 import com.example.mediasoundfilter.ui.screens.search.SearchScreen
-import com.example.mediasoundfilter.ui.screens.video.VideoViewModel
+import com.example.mediasoundfilter.ui.screens.video.VideoSharedViewModel
 import com.example.mediasoundfilter.ui.screens.video.media.MediaScreen
 import com.example.mediasoundfilter.ui.screens.video.media.MediaViewModel
 import com.example.mediasoundfilter.ui.screens.video.sounds.SoundsScreen
@@ -24,7 +24,7 @@ fun MediaSoundFilterNavHost(
     navController: NavHostController
 ) {
 
-    val videoViewModel: VideoViewModel = viewModel()
+    val videoSharedViewModel: VideoSharedViewModel = viewModel()
 
     NavHost(
        navController = navController,
@@ -40,7 +40,7 @@ fun MediaSoundFilterNavHost(
        }
        composable("upload") {
            val uploadViewModel: UploadViewModel = viewModel()
-           UploadScreen(videoViewModel, uploadViewModel, navController)
+           UploadScreen(uploadViewModel, navController)
        }
        composable("account") {
            AccountScreen(navController)
@@ -50,12 +50,11 @@ fun MediaSoundFilterNavHost(
        }
        composable("sounds"){
            val soundsViewModel: SoundsViewModel = viewModel()
-           SoundsScreen(videoViewModel, soundsViewModel, navController)
+           SoundsScreen(videoSharedViewModel, soundsViewModel, navController)
        }
-       composable("media/{videoId}") { backStackEntry ->
+       composable("media") {
            val mediaViewModel : MediaViewModel = viewModel()
-           val videoId = backStackEntry.arguments?.getString("videoId")
-           MediaScreen(videoViewModel, mediaViewModel, navController, videoId)
+           MediaScreen(videoSharedViewModel, mediaViewModel, navController)
        }
    }
 }
