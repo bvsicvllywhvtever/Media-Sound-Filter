@@ -1,4 +1,4 @@
-package com.example.mediasoundfilter.ui.screens.media
+package com.example.mediasoundfilter.ui.screens.video.sounds
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -15,35 +15,39 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
+import com.example.mediasoundfilter.domain.model.Video
 import com.example.mediasoundfilter.ui.components.AdaptableGrid
 import com.example.mediasoundfilter.ui.components.ExpandableCard
 import com.example.mediasoundfilter.ui.components.NavBar
+import com.example.mediasoundfilter.ui.screens.video.VideoSharedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SoundsScreen(mediaViewModel: MediaViewModel, navController: NavController) {
+fun SoundsScreen(videoSharedViewModel: VideoSharedViewModel,
+                 soundsViewModel: SoundsViewModel,
+                 navController: NavController) {
 
-    val mediaUiState = mediaViewModel.mediaUiState.collectAsState()
-    val videoId = mediaUiState.value.videoId
+    val soundsUiState = soundsViewModel.soundsUiState.collectAsState()
+    val video: Video = videoSharedViewModel.getCurrentVideo()!!
 
-    mediaViewModel.setSounds()
+    soundsViewModel.setSounds()
 
     Scaffold(
         content = { padding ->
             Column(modifier = Modifier.padding(padding)) {
 
-                val title = mediaUiState.value.videoTitle
+                val title = video.title
 
                 Text(stringResource(R.string.mute_sounds_title) + " " + title + "?")
 
-                val soundCategories = mediaUiState.value.muteSounds.keys
+                val soundCategories = soundsUiState.value.muteSounds.keys
                 for (cat in soundCategories) {
                     ExpandableCard(cat) {
-                        mediaUiState.value.muteSounds[cat]?.let {
+                        soundsUiState.value.muteSounds[cat]?.let {
                             AdaptableGrid(
                                 2,
                                 it,
-                                mediaViewModel
+                                soundsViewModel
                             )
                         }
                     }
@@ -52,8 +56,7 @@ fun SoundsScreen(mediaViewModel: MediaViewModel, navController: NavController) {
                 Button(
                     content = { Text(stringResource(R.string.watch_video)) },
                     onClick = {
-                        navController.navigate("media/$videoId")
-                        mediaViewModel.resetState()
+                        navController.navigate("media")
                     }
                 )
             }
@@ -65,5 +68,5 @@ fun SoundsScreen(mediaViewModel: MediaViewModel, navController: NavController) {
 @Preview(showBackground = true)
 @Composable
 fun SoundsScreenPreview(){
-    SoundsScreen(viewModel(), rememberNavController())
+    SoundsScreen(viewModel(), viewModel(), rememberNavController())
 }

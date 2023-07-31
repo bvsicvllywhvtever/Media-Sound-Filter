@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,25 +32,35 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
 import com.example.mediasoundfilter.ui.screens.error.BottomErrorText
 import com.example.mediasoundfilter.ui.screens.error.ErrorText
-import com.example.mediasoundfilter.ui.screens.auth.AuthViewModel
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
+fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
 
     var emailValue by remember {mutableStateOf("")}
     var passValue by remember { mutableStateOf("") }
 
     //check if logged in
-    val authUiState = authViewModel.authUiState.collectAsState()
-    if(authUiState.value.currentUser != null){
-        navController.navigate("upload")
+    val loginUiState = loginViewModel.loginUiState.collectAsState()
+    val currentUser = loginUiState.value.currentUser
+
+    LaunchedEffect(currentUser){
+        currentUser?.let{
+            navController.navigate("upload"){
+                popUpTo(navController.graph.id){
+                    inclusive = true
+                }
+            }
+            loginViewModel.resetState()
+        }
     }
 
     Column(
@@ -71,14 +82,14 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
             OutlinedTextField(
                 value = emailValue,
                 onValueChange = { emailValue = it },
-                isError = authUiState.value.fieldErrors["loginEmail"] != null,
+                isError = loginUiState.value.fieldErrors["loginEmail"] != null,
                 label = {Text(stringResource(R.string.email))},
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Email,
                         contentDescription = null,
                         tint =
-                        if (authUiState.value.fieldErrors["loginEmail"] == null){
+                        if (loginUiState.value.fieldErrors["loginEmail"] == null){
                             colorResource(R.color.main)
                         }
                         else{
@@ -90,18 +101,18 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
             )
 
             //show required email error message
-            authUiState.value.fieldErrors["loginEmail"]?.let { ErrorText(it) }
+            loginUiState.value.fieldErrors["loginEmail"]?.let { ErrorText(it) }
 
             OutlinedTextField(
                 value = passValue,
                 onValueChange = {passValue = it},
-                isError = authUiState.value.fieldErrors["loginPass"] != null,
+                isError = loginUiState.value.fieldErrors["loginPass"] != null,
                 label = {Text(stringResource(R.string.password))},
                 leadingIcon = {
                     Icon(
                         imageVector = Icons.Default.Lock,
                         contentDescription = null,
-                        tint = if (authUiState.value.fieldErrors["loginPass"] == null){
+                        tint = if (loginUiState.value.fieldErrors["loginPass"] == null){
                             colorResource(R.color.main)
                         }
                         else{
@@ -114,11 +125,11 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
             )
 
             //show required password error
-            authUiState.value.fieldErrors["loginPass"]?.let { ErrorText(it) }
+            loginUiState.value.fieldErrors["loginPass"]?.let { ErrorText(it) }
         }
         Button(
             onClick = {
-                authViewModel.login(emailValue, passValue)
+                loginViewModel.login(emailValue, passValue)
             },
             shape = RoundedCornerShape(10.dp),
             colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
@@ -133,12 +144,17 @@ fun LoginScreen(authViewModel: AuthViewModel, navController: NavController) {
             Text(
                 text = stringResource(R.string.sign_up_link),
                 color = colorResource(R.color.link),
-                modifier = Modifier.clickable(onClick = {navController.navigate("createAccount")})
+                modifier = Modifier.clickable(onClick = {
+                    navController.navigate("createAccount")
+                    loginViewModel.viewModelScope.launch{
+                        loginViewModel.resetState()
+                    }
+                })
             )
         }
 
         //show invalid login error
-        authUiState.value.fieldErrors["loginBottom"]?.let { BottomErrorText(it) }
+        loginUiState.value.fieldErrors["loginBottom"]?.let { BottomErrorText(it) }
     }
 }
 

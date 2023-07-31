@@ -1,4 +1,4 @@
-package com.example.mediasoundfilter.ui.screens.media
+package com.example.mediasoundfilter.ui.screens.video.media
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -6,7 +6,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,12 +15,16 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.ui.components.NavBar
 import com.example.mediasoundfilter.ui.components.YoutubePlayerComposeView
+import com.example.mediasoundfilter.ui.screens.video.VideoSharedViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MediaScreen(mediaViewModel: MediaViewModel, navController: NavController, videoId: String?) {
+fun MediaScreen(
+    videoSharedViewModel: VideoSharedViewModel,
+    mediaViewModel: MediaViewModel,
+    navController: NavController) {
 
-    val mediaUiState = mediaViewModel.mediaUiState.collectAsState()
+    val video = videoSharedViewModel.getCurrentVideo()!!
 
     Scaffold(
         content = { padding ->
@@ -29,19 +32,17 @@ fun MediaScreen(mediaViewModel: MediaViewModel, navController: NavController, vi
                 modifier = Modifier
                     .padding(padding)
             ) {
-                if (videoId != null) {
-                    YoutubePlayerComposeView(videoId, mediaViewModel.getMuteTimes()) //check if this can have a content desc
-                }
+                YoutubePlayerComposeView(video.id, mediaViewModel.getMuteTimes()) //check if this can have a content desc
 
                 Column(
                     modifier = Modifier.padding(10.dp, 5.dp)
                 ) {
                     Text(
-                        text = mediaUiState.value.videoTitle ?: "",
+                        text = video.title,
                         fontSize = 20.sp
                     )
                     Text(
-                        text = mediaUiState.value.channelTitle ?: "",
+                        text = video.channelTitle,
                         fontSize = 16.sp
                     )
                 }
@@ -54,5 +55,5 @@ fun MediaScreen(mediaViewModel: MediaViewModel, navController: NavController, vi
 @Preview(showBackground = true)
 @Composable
 fun MediaScreenPreview() {
-    MediaScreen(viewModel(), rememberNavController(), null)
+    MediaScreen(viewModel(), viewModel(), rememberNavController())
 }

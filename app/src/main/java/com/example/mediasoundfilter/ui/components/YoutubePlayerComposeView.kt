@@ -3,7 +3,10 @@ package com.example.mediasoundfilter.ui.components
 import android.view.View
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
@@ -20,6 +23,7 @@ fun YoutubePlayerComposeView(videoId: String, muteTimes: List<Pair<Double, Doubl
     val lifecycleOwner = LocalLifecycleOwner.current
     val youTubePlayerView = remember{YouTubePlayerView(context)}
 
+    var isInitialized by remember { mutableStateOf(false) }
     var isMuted = false
     var isPlaying = false
     var idx = 0
@@ -37,9 +41,8 @@ fun YoutubePlayerComposeView(videoId: String, muteTimes: List<Pair<Double, Doubl
         .fullscreen(1)
         .build()
 
-    AndroidView({youTubePlayerView}) {view ->
-        //loads video once player is ready
-        view.initialize(object : AbstractYouTubePlayerListener() {
+    val initializer = remember {
+        object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer){
                 youTubePlayer.loadVideo(videoId, 0F)
             }
@@ -69,7 +72,15 @@ fun YoutubePlayerComposeView(videoId: String, muteTimes: List<Pair<Double, Doubl
                 }
             }
 
-        }, true, iFramePlayerOptions)
+        }
+    }
+
+    AndroidView({youTubePlayerView}) {view ->
+        //loads video once player is ready
+        if(!isInitialized){
+            isInitialized = true
+            view.initialize(initializer, true, iFramePlayerOptions)
+        }
     }
 
     //since youTubePlayerView is a view, we need to make sure it is created and destroyed with
