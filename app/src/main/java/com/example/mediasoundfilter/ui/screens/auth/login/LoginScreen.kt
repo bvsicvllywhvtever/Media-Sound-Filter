@@ -54,12 +54,12 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
 
     LaunchedEffect(currentUser){
         currentUser?.let{
-            loginViewModel.resetState()
             navController.navigate("upload"){
                 popUpTo(navController.graph.id){
                     inclusive = true
                 }
             }
+            loginViewModel.resetState()
         }
     }
 

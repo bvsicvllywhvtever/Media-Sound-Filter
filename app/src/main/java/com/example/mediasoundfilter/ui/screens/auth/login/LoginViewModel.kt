@@ -31,7 +31,7 @@ class LoginViewModel @Inject constructor() : ViewModel() {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        _loginUiState.value = LoginUiState(currentUser = email)
+                        _loginUiState.value = loginUiState.value.copy(currentUser = email)
                     } else {
                         _loginUiState.value = _loginUiState.value.copy(
                             fieldErrors = _loginUiState.value.fieldErrors + ("loginBottom" to "Invalid email or password.")
@@ -48,7 +48,6 @@ class LoginViewModel @Inject constructor() : ViewModel() {
 
         val fieldErrors = _loginUiState.value.fieldErrors
         return fieldErrors["loginEmail"] == null && fieldErrors["loginPass"] == null
-                && fieldErrors["loginBottom"] == null
     }
 
     private fun validateRequired(input: String, inputValue: String){
