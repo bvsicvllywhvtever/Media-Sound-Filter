@@ -3,7 +3,6 @@ package com.example.mediasoundfilter.ui.screens.video.upload
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mediasoundfilter.data.repository.VideoRepository
-import com.example.mediasoundfilter.domain.model.Video
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -42,7 +41,7 @@ class UploadViewModel: ViewModel() {
 
             //check if videoId is valid, and update state accordingly
             viewModelScope.launch {
-                getVideoFromId(id)
+                VideoRepository.retrieveCurrentVideoById(id)
                 if (VideoRepository.getCurrentVideo() != null) {
                     _uploadUiState.value = _uploadUiState.value.copy(videoId = id)
                 } else {
@@ -51,9 +50,5 @@ class UploadViewModel: ViewModel() {
                 }
             }
         }
-    }
-
-    private suspend fun getVideoFromId(id: String) {
-        VideoRepository.getVideoById(id)
     }
 }
