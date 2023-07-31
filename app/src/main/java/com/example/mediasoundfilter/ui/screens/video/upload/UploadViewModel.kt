@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mediasoundfilter.data.repository.VideoRepository
 import com.example.mediasoundfilter.domain.model.Video
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -56,7 +57,8 @@ class UploadViewModel: ViewModel() {
         return VideoRepository.getVideoById(id)
     }
 
-    fun resetState(){
+    suspend fun resetState(){
+        delay(500)
         _uploadUiState.value = UploadUiState()
     }
 }
