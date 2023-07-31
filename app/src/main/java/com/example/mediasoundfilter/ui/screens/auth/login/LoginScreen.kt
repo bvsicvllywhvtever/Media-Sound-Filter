@@ -32,12 +32,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.mediasoundfilter.R
 import com.example.mediasoundfilter.ui.screens.error.BottomErrorText
 import com.example.mediasoundfilter.ui.screens.error.ErrorText
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -143,8 +145,10 @@ fun LoginScreen(loginViewModel: LoginViewModel, navController: NavController) {
                 text = stringResource(R.string.sign_up_link),
                 color = colorResource(R.color.link),
                 modifier = Modifier.clickable(onClick = {
-                    loginViewModel.resetState()
                     navController.navigate("createAccount")
+                    loginViewModel.viewModelScope.launch{
+                        loginViewModel.resetState()
+                    }
                 })
             )
         }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -56,7 +57,8 @@ class LoginViewModel @Inject constructor() : ViewModel() {
             fieldErrors = _loginUiState.value.fieldErrors + (input to errorText))
     }
 
-    fun resetState(){
+    suspend fun resetState(){
+        delay(500)
         _loginUiState.value = LoginUiState()
     }
 }
