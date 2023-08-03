@@ -17,27 +17,3 @@ interface YoutubeApiService {
     suspend fun getVideoById(@Query("id") id: String): Response<VideoList>
 }
 
-private const val BASE_URL = "https://www.googleapis.com/youtube/v3/"
-
-val logger = HttpLoggingInterceptor().apply{level = HttpLoggingInterceptor.Level.BODY}
-
-val client: OkHttpClient = OkHttpClient.Builder()
-    .addInterceptor(YoutubeInterceptor())
-    .addInterceptor(logger)
-    .build()
-
-private val retrofit = Retrofit.Builder()
-    .baseUrl(BASE_URL)
-    .addConverterFactory(
-        MoshiConverterFactory.create(
-            Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
-        )
-    )
-    .client(client)
-    .build()
-
-object YoutubeApi{
-    val apiService: YoutubeApiService by lazy{
-        retrofit.create(YoutubeApiService::class.java)
-    }
-}

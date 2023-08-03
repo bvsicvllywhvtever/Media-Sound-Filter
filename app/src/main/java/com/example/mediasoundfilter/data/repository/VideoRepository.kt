@@ -1,12 +1,15 @@
 package com.example.mediasoundfilter.data.repository
 
-import com.example.mediasoundfilter.data.api.YoutubeApi
+import com.example.mediasoundfilter.data.api.YoutubeApiService
 import com.example.mediasoundfilter.data.responsemodel.VideoDTO
 import com.example.mediasoundfilter.domain.model.Video
+import javax.inject.Inject
 
-object VideoRepository {
+class VideoRepository @Inject constructor(
+    private val youtubeApi: YoutubeApiService
+) {
     suspend fun getVideoById(id: String): Video? {
-        val videos = YoutubeApi.apiService.getVideoById(id).body()?.items?.map { mapToVideo(it) } ?: emptyList()
+        val videos = youtubeApi.getVideoById(id).body()?.items?.map { mapToVideo(it) } ?: emptyList()
 
         if(videos.size != 1){
             return null
