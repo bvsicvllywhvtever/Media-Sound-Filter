@@ -40,16 +40,14 @@ fun SoundsScreen(videoSharedViewModel: VideoSharedViewModel,
 
                 Text(stringResource(R.string.mute_sounds_title) + " " + title + "?")
 
-                val soundCategories = soundsUiState.value.muteSounds.keys
+                val soundCategories = soundsUiState.value.muteSounds
                 for (cat in soundCategories) {
-                    ExpandableCard(cat) {
-                        soundsUiState.value.muteSounds[cat]?.let {
-                            AdaptableGrid(
-                                2,
-                                it,
-                                soundsViewModel
-                            )
-                        }
+                    ExpandableCard(cat.category) {
+                        AdaptableGrid(
+                            2,
+                            cat.sounds,
+                            soundsViewModel
+                        )
                     }
                 }
 

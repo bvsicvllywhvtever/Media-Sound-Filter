@@ -1,7 +1,7 @@
 package com.example.mediasoundfilter.data.api
 
 import com.example.mediasoundfilter.data.interceptors.YoutubeInterceptor
-import com.example.mediasoundfilter.data.responsemodel.VideoList
+import com.example.mediasoundfilter.data.responsemodel.video.VideoList
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
