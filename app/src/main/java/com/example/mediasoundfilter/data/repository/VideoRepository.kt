@@ -1,7 +1,7 @@
 package com.example.mediasoundfilter.data.repository
 
 import com.example.mediasoundfilter.data.api.YoutubeApi
-import com.example.mediasoundfilter.data.responsemodel.VideoDTO
+import com.example.mediasoundfilter.data.responsemodel.video.VideoDTO
 import com.example.mediasoundfilter.domain.model.Video
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
