@@ -2,6 +2,8 @@ package com.example.mediasoundfilter.data.di
 
 import com.example.mediasoundfilter.data.api.YoutubeApiService
 import com.example.mediasoundfilter.data.interceptors.YoutubeInterceptor
+import com.example.mediasoundfilter.data.repository.VideoRepositoryImpl
+import com.example.mediasoundfilter.domain.VideoRepository
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -40,6 +42,12 @@ object AppModule {
             .client(client)
             .build()
             .create(YoutubeApiService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideVideoRepository(youtubeApi: YoutubeApiService): VideoRepository {
+        return VideoRepositoryImpl(youtubeApi)
     }
 
 

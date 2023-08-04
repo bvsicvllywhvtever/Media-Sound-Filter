@@ -2,7 +2,7 @@ package com.example.mediasoundfilter.ui.screens.video
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.mediasoundfilter.data.repository.VideoRepository
+import com.example.mediasoundfilter.domain.VideoRepository
 import com.example.mediasoundfilter.domain.model.Video
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
