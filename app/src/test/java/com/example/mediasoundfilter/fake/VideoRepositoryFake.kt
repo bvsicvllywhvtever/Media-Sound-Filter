@@ -7,12 +7,11 @@ class VideoRepositoryFake: VideoRepository {
     override suspend fun getVideoById(id: String): Video? {
         // if string is x z return cases
 
-        if(id.equals("https://www.youtube.com/watch?v=ErhtJdsIJdM")){
+        if(id.equals("ErhtJdsIJdM")){
             return Video("123","test")
         } else {
             return null
         }
-
 
     }
 }
