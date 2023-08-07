@@ -27,8 +27,12 @@ fun YoutubePlayerComposeView(videoId: String, muteTimes: List<Pair<Double, Doubl
     var isMuted = false
     var isPlaying = false
     var idx = 0
-    var start = muteTimes.get(0).first
-    var end = muteTimes.get(0).second
+    var start = -1.0
+    var end = -1.0
+    if(muteTimes.isNotEmpty()) {
+        start = muteTimes.get(0).first
+        end = muteTimes.get(0).second
+    }
 
     youTubePlayerView.enableAutomaticInitialization = false
     youTubePlayerView.addFullscreenListener(object : FullscreenListener{
@@ -52,7 +56,7 @@ fun YoutubePlayerComposeView(videoId: String, muteTimes: List<Pair<Double, Doubl
             }
 
             override fun onCurrentSecond(youTubePlayer: YouTubePlayer, second: Float) {
-                if(isPlaying) {
+                if(isPlaying && muteTimes.isNotEmpty()) {
                     when {
                         second in start..end && !isMuted -> {
                             youTubePlayer.mute()
