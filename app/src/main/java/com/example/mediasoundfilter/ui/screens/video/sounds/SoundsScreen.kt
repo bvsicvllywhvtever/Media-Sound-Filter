@@ -7,6 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -32,6 +33,13 @@ fun SoundsScreen(videoSharedViewModel: VideoSharedViewModel,
 
     soundsViewModel.setSounds()
 
+    val ready = soundsUiState.value.muteSoundsLoaded
+    LaunchedEffect(ready){
+        if(ready) {
+            navController.navigate("media")
+        }
+    }
+
     Scaffold(
         content = { padding ->
             Column(modifier = Modifier.padding(padding)) {
@@ -54,7 +62,7 @@ fun SoundsScreen(videoSharedViewModel: VideoSharedViewModel,
                 Button(
                     content = { Text(stringResource(R.string.watch_video)) },
                     onClick = {
-                        navController.navigate("media")
+                        soundsViewModel.setMuteTimes()
                     }
                 )
             }

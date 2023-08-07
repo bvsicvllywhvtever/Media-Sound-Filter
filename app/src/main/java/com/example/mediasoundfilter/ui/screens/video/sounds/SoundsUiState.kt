@@ -4,5 +4,6 @@ import com.example.mediasoundfilter.domain.model.SoundCategory
 
 data class SoundsUiState (
     val muteSounds: List<SoundCategory> = emptyList(),
-    val selectedSounds: Map<String, Boolean> = emptyMap()
+    val selectedSounds: Map<String, Boolean> = emptyMap(),
+    val muteSoundsLoaded: Boolean = false
 )
