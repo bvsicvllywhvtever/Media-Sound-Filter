@@ -14,7 +14,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,14 +42,6 @@ fun UploadScreen(uploadViewModel: UploadViewModel,
                  navController: NavHostController) {
 
     val uploadUiState = uploadViewModel.uploadUiState.collectAsState()
-
-    val uploadSuccessful = uploadUiState.value.uploadSuccessful
-    LaunchedEffect(uploadSuccessful){
-        if(uploadSuccessful){
-            navController.navigate("sounds")
-            uploadViewModel.resetState()
-        }
-    }
 
     Scaffold(
         content = { padding ->
@@ -84,7 +75,10 @@ fun UploadScreen(uploadViewModel: UploadViewModel,
                     modifier = Modifier.padding(20.dp)
                 )
                 Button(
-                    onClick = {uploadViewModel.extractVideoId(linkValue)},
+                    onClick = {
+                        uploadViewModel.extractVideoId(linkValue)
+                        navController.navigate("loading")
+                              },
                     shape = RoundedCornerShape(10.dp),
                     colors = ButtonDefaults.buttonColors(colorResource(R.color.main))
                 ) {

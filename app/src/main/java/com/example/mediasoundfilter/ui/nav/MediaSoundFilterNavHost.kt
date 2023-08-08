@@ -11,6 +11,7 @@ import com.example.mediasoundfilter.ui.screens.auth.create_account.CreateAccount
 import com.example.mediasoundfilter.ui.screens.auth.login.LoginScreen
 import com.example.mediasoundfilter.ui.screens.auth.login.LoginViewModel
 import com.example.mediasoundfilter.ui.screens.search.SearchScreen
+import com.example.mediasoundfilter.ui.screens.video.LoadingScreen
 import com.example.mediasoundfilter.ui.screens.video.VideoSharedViewModel
 import com.example.mediasoundfilter.ui.screens.video.media.MediaScreen
 import com.example.mediasoundfilter.ui.screens.video.media.MediaViewModel
@@ -25,6 +26,7 @@ fun MediaSoundFilterNavHost(
 ) {
 
     val videoSharedViewModel: VideoSharedViewModel = viewModel()
+    val uploadViewModel: UploadViewModel = viewModel()
 
     NavHost(
        navController = navController,
@@ -39,7 +41,6 @@ fun MediaSoundFilterNavHost(
            CreateAccountScreen(createAccountViewModel, navController)
        }
        composable("upload") {
-           val uploadViewModel: UploadViewModel = viewModel()
            UploadScreen(uploadViewModel, navController)
        }
        composable("account") {
@@ -48,6 +49,9 @@ fun MediaSoundFilterNavHost(
        composable("search") {
            SearchScreen(navController)
        }
+        composable("loading"){
+            LoadingScreen(uploadViewModel, navController)
+        }
        composable("sounds"){
            val soundsViewModel: SoundsViewModel = viewModel()
            SoundsScreen(videoSharedViewModel, soundsViewModel, navController)

@@ -41,13 +41,14 @@ class UploadViewModel: ViewModel() {
             //check if videoId is valid, and update state accordingly
             viewModelScope.launch {
                 setCurrentVideo(id)
-                if (VideoRepository.getCurrentVideo() != null) {
-                    _uploadUiState.value =
-                        _uploadUiState.value.copy(uploadSuccessful = true)
-                }
-                else{
+                if (VideoRepository.getCurrentVideo() == null) {
                     _uploadUiState.value =
                         _uploadUiState.value.copy(linkError = "Youtube link is not valid.")
+                }
+                else{
+                    processVideo(id)
+                    _uploadUiState.value =
+                        _uploadUiState.value.copy(uploadSuccessful = true)
                 }
             }
         }
@@ -55,6 +56,10 @@ class UploadViewModel: ViewModel() {
 
     private suspend fun setCurrentVideo(id: String): Video? {
         return VideoRepository.getVideoById(id)
+    }
+
+    private suspend fun processVideo(id: String){
+        VideoRepository.processVideo(id)
     }
 
     suspend fun resetState(){

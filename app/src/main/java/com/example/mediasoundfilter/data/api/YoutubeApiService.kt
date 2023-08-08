@@ -19,9 +19,9 @@ interface YoutubeApiService {
 
 private const val BASE_URL = "https://www.googleapis.com/youtube/v3/"
 
-val logger = HttpLoggingInterceptor().apply{level = HttpLoggingInterceptor.Level.BODY}
+private val logger = HttpLoggingInterceptor().apply{level = HttpLoggingInterceptor.Level.BODY}
 
-val client: OkHttpClient = OkHttpClient.Builder()
+private val client: OkHttpClient = OkHttpClient.Builder()
     .addInterceptor(YoutubeInterceptor())
     .addInterceptor(logger)
     .build()
